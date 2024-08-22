@@ -1,0 +1,156 @@
+{
+  "main": {
+    "id": "6df8cace8bfd945f",
+    "type": "split",
+    "children": [
+      {
+        "id": "b5e5516c8df7ad8e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "00ed2757a8afa487",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "COT3100 (Discrete)/Lecture 1.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2dcd688495cb90ae",
+    "type": "split",
+    "children": [
+      {
+        "id": "71f1fa691d0c8a0b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "445541114c4881d4",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "0629731655244e2d",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "96adaf759e010de3",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "aaccbcf709425ac4",
+    "type": "split",
+    "children": [
+      {
+        "id": "b91d23e92d869156",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7cc4973ee3b2b2e6",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "COT3100 (Discrete)/Lecture 1.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "082335ff93948195",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "COT3100 (Discrete)/Lecture 1.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "56563b4b1b601807",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "3d4e11ca8ab297e0",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "COT3100 (Discrete)/Lecture 1.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "445541114c4881d4",
+  "lastOpenFiles": [
+    "CHM2210 (Orgo)",
+    "MAC2313 (Calc 3)",
+    "COP3503C (Prog 2)",
+    "COT3100 (Discrete)/Lecture 1.md"
+  ]
+}
