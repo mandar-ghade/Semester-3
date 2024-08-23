@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "b5e5516c8df7ad8e",
+        "id": "e82004f0b43f899f",
         "type": "tabs",
         "children": [
           {
-            "id": "00ed2757a8afa487",
+            "id": "5359083fb649c91e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "COT3100 (Discrete)/Lecture 1.md",
+                "file": "MAC2313 (Calc 3)/Lecture 1.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "aaccbcf709425ac4",
@@ -85,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "COT3100 (Discrete)/Lecture 1.md",
+                "file": "MAC2313 (Calc 3)/Lecture 1.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "COT3100 (Discrete)/Lecture 1.md",
+                "file": "MAC2313 (Calc 3)/Lecture 1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "COT3100 (Discrete)/Lecture 1.md"
+                "file": "MAC2313 (Calc 3)/Lecture 1.md"
               }
             }
           }
@@ -146,11 +147,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "445541114c4881d4",
+  "active": "5359083fb649c91e",
   "lastOpenFiles": [
+    "MAC2313 (Calc 3)/Lecture 1.md",
+    "COT3100 (Discrete)/Lecture 1.md",
     "CHM2210 (Orgo)",
     "MAC2313 (Calc 3)",
-    "COP3503C (Prog 2)",
-    "COT3100 (Discrete)/Lecture 1.md"
+    "COP3503C (Prog 2)"
   ]
 }
