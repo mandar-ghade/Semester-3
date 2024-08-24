@@ -18,6 +18,6 @@ $$|P_1P_2| = \sqrt{(x_1-x_2)^2+(y_1-y_2)+(z_1-z_2)^2}$$
 ### Equation of a sphere:
 $$(x-a)^2+(y-b)^2+(z-c)^2=r^2$$
 $$\text{center}=(a,b,c)$$
-Midpoint formula works the same between points in 3d as it did in 2d, just don't forget to account for $z$.
+Midpoint formula works the same between points in $3D$ as it did in $2D$, just don't forget to account for $z$.
 
 Complete the square if a sphere formula is expanded (remember add ${(\frac{b}{2})}^{2}$ to both sides of the equation).
