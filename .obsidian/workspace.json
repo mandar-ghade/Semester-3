@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CHM2210 (Orgo)/Lecture 2.md",
+                "file": "COT3100 (Discrete)/Lecture 1.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CHM2210 (Orgo)/Lecture 2.md",
+                "file": "COT3100 (Discrete)/Lecture 1.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CHM2210 (Orgo)/Lecture 2.md",
+                "file": "COT3100 (Discrete)/Lecture 1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CHM2210 (Orgo)/Lecture 2.md"
+                "file": "COT3100 (Discrete)/Lecture 1.md"
               }
             }
           }
@@ -148,8 +148,9 @@
   },
   "active": "0d56e575fd059936",
   "lastOpenFiles": [
-    "Pasted image 20240826211444.png.md",
+    "Pasted image 20240827091424.png",
     "CHM2210 (Orgo)/Lecture 2.md",
+    "Pasted image 20240826211444.png.md",
     "Images/Lecture 2 Page 2.png",
     "CHM2210 (Orgo)/Lecture 1.md",
     "Pasted image 20240826211444.png",
