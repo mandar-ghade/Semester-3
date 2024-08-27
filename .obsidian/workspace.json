@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "49a1a3f75d2f72f3",
+        "id": "ad790909e0f6c9ef",
         "type": "tabs",
         "children": [
           {
-            "id": "0a22beaf21f01a94",
+            "id": "0d56e575fd059936",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CHM2210 (Orgo)/Lecture 1.md",
+                "file": "CHM2210 (Orgo)/Lecture 2.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "aaccbcf709425ac4",
@@ -86,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CHM2210 (Orgo)/Lecture 1.md",
+                "file": "CHM2210 (Orgo)/Lecture 2.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CHM2210 (Orgo)/Lecture 1.md",
+                "file": "CHM2210 (Orgo)/Lecture 2.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CHM2210 (Orgo)/Lecture 1.md"
+                "file": "CHM2210 (Orgo)/Lecture 2.md"
               }
             }
           }
@@ -147,9 +146,17 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "0a22beaf21f01a94",
+  "active": "0d56e575fd059936",
   "lastOpenFiles": [
+    "Pasted image 20240826211444.png.md",
+    "CHM2210 (Orgo)/Lecture 2.md",
+    "Images/Lecture 2 Page 2.png",
     "CHM2210 (Orgo)/Lecture 1.md",
+    "Pasted image 20240826211444.png",
+    "Images/Lecture 2 Page 1.png",
+    "Images",
+    "COP3503C (Prog 2)/1.cpp~",
+    "COP3503C (Prog 2)/1.cpp",
     "MAC2313 (Calc 3)/Lecture 1.md",
     "COT3100 (Discrete)/Lecture 1.md",
     "CHM2210 (Orgo)",
