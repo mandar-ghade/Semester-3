@@ -7,3 +7,5 @@ $$\text{Formal Charge} = \text{\# valence $e^-$ (from periodic table)} - \text{\
 !![[Lecture 2 Page 2.png]][[Pasted image 20240826211444.png]]
 
 Also $C_3H_8$ (propane) is tetrahedral structure (109.5$\degree$) because methane ($CH_4$) has $sp^3$ hybridization, and therefore has tetrahedral structure.
+
+Hydrogens on hetero-atoms ($S,N,O,P$) are always drawn.(NOT CARBON)
