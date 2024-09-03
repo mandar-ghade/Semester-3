@@ -44,5 +44,5 @@ $\pi$ -  side-to-side overlap:
 - weak
 - p-orbitals
 
-![[Orgo Lecture 4 Page 1.png]]
-![[Orgo Lecture 4 Page 2.png]]
+![[Images/Orgo Lecture 4 Page 1.png]]
+![[Images/Orgo Lecture 4 Page 2.png]]
