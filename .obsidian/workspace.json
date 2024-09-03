@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "d010cfb5b8570ca5",
+        "id": "cdfced0e6e19bec6",
         "type": "tabs",
         "children": [
           {
-            "id": "9d1e49ba72c56e2d",
+            "id": "b5019cbea907cc38",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "MAC2313 (Calc 3)/Lecture 4.md",
+                "file": "COT3100 (Discrete)/Lecture 2.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "MAC2313 (Calc 3)/Lecture 4.md",
+                "file": "COT3100 (Discrete)/Lecture 2.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "MAC2313 (Calc 3)/Lecture 4.md",
+                "file": "COT3100 (Discrete)/Lecture 2.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "MAC2313 (Calc 3)/Lecture 4.md"
+                "file": "COT3100 (Discrete)/Lecture 2.md"
               }
             }
           }
@@ -146,24 +146,25 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "9d1e49ba72c56e2d",
+  "active": "b5019cbea907cc38",
   "lastOpenFiles": [
-    "MAC2313 (Calc 3)/Lecture 3.md",
-    "MAC2313 (Calc 3)/Lecture 2.md",
-    "MAC2313 (Calc 3)/Lecture 1.md",
     "COT3100 (Discrete)/Lecture 1.md",
-    "CHM2210 (Orgo)/Lecture 3.md",
-    "CHM2210 (Orgo)/Lecture 4.md",
-    "CHM2210 (Orgo)/Lecture 2.md",
-    "CHM2210 (Orgo)/Lecture 1.md",
+    "COT3100 (Discrete)/Lecture 2.md",
     "MAC2313 (Calc 3)/Lecture 4.md",
+    "CHM2210 (Orgo)/Lecture 2.md",
+    "MAC2313 (Calc 3)/scripts/dot_product.ipynb",
+    "MAC2313 (Calc 3)/Lecture 3.md",
     "Images/MAC2313 Lecture 4 Image 1.png",
     "Images/MAC2313 Lecture 3 Image.png",
     "Images/MAC2313 Lecture 3 Image 2.png",
-    "MAC2313 (Calc 3)/scripts/dot_product.ipynb",
+    "MAC2313 (Calc 3)/Lecture 2.md",
+    "MAC2313 (Calc 3)/Lecture 1.md",
+    "CHM2210 (Orgo)/Lecture 4.md",
+    "CHM2210 (Orgo)/Lecture 3.md",
+    "CHM2210 (Orgo)/Lecture 1.md",
     "Images/Orgo Lecture 4 Page 2.png",
     "Images/Orgo Lecture 4 Page 1.png",
-    "COP3503C (Prog 2)/lab1",
+    "COP3503C (Prog 2)/lab1.cpp~",
     "Images/Lecture 3 Page 3.png",
     "Images/Lecture 3 Page 4.png",
     "Images/Lecture 3 Page 2.png",
