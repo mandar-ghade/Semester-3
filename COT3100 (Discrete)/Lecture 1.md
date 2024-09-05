@@ -47,7 +47,7 @@
 		- does not imply that $p$ or $q$ are ever true.
 	- ##### Inverse, Converse, Contrapositive
 		- $p \implies q$ 
-		- Inverse: $\neg{p} \implies \neg{q}$
+		- Inverse: $\neg p\implies\neg q$
 		- Converse: $q \implies p$
 		- Contrapositive: $\neg{q} \implies \neg{p}$
 - Bi-conditional (IFF)

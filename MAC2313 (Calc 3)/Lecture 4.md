@@ -5,7 +5,7 @@ $$
 \newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
 \newcommand{\bmat}[1]{\begin{bmatrix}#1\end{bmatrix}}
 \newcommand{\smallmag}[1]{\mid#1\mid}
-\newcommand{\mag}[1]{\mid\mid #1 \mid\mid}
+\newcommand{\mag}[1]{\left\|#1\right\|}
 \newcommand{\dot}[2]{#1 \cdot #2}
 \newcommand{\cross}[2]{#1 \times #2}
 \newcommand{\vcoords}[1]{\langle#1\rangle}
@@ -49,7 +49,8 @@ Colinear:
 $\vec u$ and $\vec v$ are parallel if $\cross{\vec u}{\vec v}=\nullvec$.
 
 ## Algebraic properties
-$$\cross{\vec u}{\vec v} = \cross{-\vec v}{\vec u}$$
+$$\cross{\vec u}{\vec v} = -\cross{\vec v}{\vec u}$$
+(Remember you can factor out a -1 because it's just a scalar)
 $$\cross{\vec u}{\vec u} = \nullvec$$ Distributive Property:
 $$\cross{\left({c \vec u}\right)}{\vec v} = c \left(\cross{\vec u}{\vec v}\right) 
 = \cross{\vec u}{\left(c \vec v\right)}$$
@@ -62,7 +63,7 @@ Associative Property DOES NOT hold.
 
 ## Triple Product
 
-![[Images/MAC2313 Lecture 4 Image 1.png]]
+![[MAC2313 Lecture 4 Image 1.png]]
 
 $$\wrap{
 \text{Volume of a parllelepiped}
@@ -104,3 +105,8 @@ $$\wrap{
 
 ## Application - Torque
 
+$$\vec \tau = \vec r\times\vec F$$
+$$\mag{\vec \tau}=\mag{\cross{\vec r}{\vec F}}$$
+$$\mag{\vec {\tau}} = \mag{\vec r} \mag{\vec F} \sin{\theta}$$
+Greatest at $\frac{\pi}{2}$ .
+(torque = position vec * force vec)

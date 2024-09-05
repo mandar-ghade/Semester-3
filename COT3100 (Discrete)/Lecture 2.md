@@ -1,13 +1,8 @@
 $$
-\newcommand{\not}{\neg}
-\newcommand{\and}{\land}
-\newcommand{\or}{\lor}
 \newcommand{\xor}{\oplus}
-\newcommand{\iff}{\leftrightarrow}
 \newcommand{\paren}[1]{\left(#1\right)}
-\newcommand{\abs}[1]{\mid#1\mid}
+\newcommand{\abs}[1]{\left|#1|\right|}
 $$
-
 # Predicate Logic
 - *Extension* of propositional logic that permits concisely reasoning about whole *classes* of entities.
 - E.g. $x\gt1$
@@ -47,10 +42,10 @@ $$
 #### Universal Quantifier $\forall$ 
 - To prove that a proposition of the form:
     - $\forall x P(x)$ is false, it suffices to find a **counterexample** (one value in the universe of discourse in which P(x) is false)
-$$\forall x P(x) \iff P(a) \and P(b) \and P(c) \and ...$$
+$$\forall x P(x) \iff P(a) \land P(b) \land P(c) \land ...$$
 
 #### Existential Quantifier $\exists$
-$$\exists x P(x) \iff P(a) \or P(b) \or P(c) \or ...$$
+$$\exists x P(x) \iff P(a) \lor P(b) \lor P(c) \lor ...$$
 
 #### Scope of Quantifiers
 - The part of a logical expression to which a quantifier is applifed.
@@ -100,3 +95,4 @@ $$\lim_{x \to a} f(x) = L \iff \paren{\forall \epsilon \gt 0 : \exists \delta \g
     - Sequence of statements that form an *argument*.
     - Argument: Series of propositions. Last one called conclusion, rest are called premises.
     - Must be correct (well-reasoned, logically valid) and complete (clear, detailed).
+

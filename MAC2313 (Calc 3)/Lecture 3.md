@@ -10,7 +10,7 @@ Zero vector $\vec{0}$ is orthogonal to all other vectors
 
 ### Vector Projection
 
-![[Images/MAC2313 Lecture 3 Image.png]]
+![[MAC2313 Lecture 3 Image.png]]
 
 Length = $\mid\mid \vec{u} \mid\mid \cos{\theta}$
 Unit vector: $$\hat{v}=\frac{\vec{v}}{\mid\mid \vec{v} \mid\mid}$$
@@ -28,7 +28,7 @@ d = distance
 Only holds if the force is directed along the line of motion.
 \
 Suppose a constant force $\vec F$ applied to an object resulting in a displacement $\vec D$.
-![[Images/MAC2313 Lecture 3 Image 2.png]]
+![[MAC2313 Lecture 3 Image 2.png]]
 If $\theta$ is the angle between $\vec F$ and $\vec D$, then:
 $$W =\mid\mid\vec{F}\mid\mid\ \mid\mid \vec D \mid\mid cos{\theta}$$
 $$W=\vec{F}\cdot\vec{D}$$
