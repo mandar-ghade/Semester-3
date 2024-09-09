@@ -30,11 +30,11 @@ $$
 - $\forall$ is the forall or universal quantifier:
     - $\forall x P(x)$ means *for all x in the u.d.*, P holds (p is a proposition given these arguments).
     - e.g. "All parking spaces at UF are full"
-    - $\not \forall \iff \exists$
+    - $\neg \forall \iff \exists$
 - $\exists$ Is the exists or existential quantifer.
     - $\exists x P(x)$ means there exists an x in the u.d.
     - e.g. "At least one parking space at UF is full"
-    - $\not \exists \iff \forall$
+    - $\neg \exists \iff \forall$
 - You can switch between quantifiers using equivalence laws. (AS LONG AS THEY'RE THE SAME)
     - Associative Property
 - Commutative and distributive properties can be used for the same quantifiers.
@@ -95,4 +95,33 @@ $$\lim_{x \to a} f(x) = L \iff \paren{\forall \epsilon \gt 0 : \exists \delta \g
     - Sequence of statements that form an *argument*.
     - Argument: Series of propositions. Last one called conclusion, rest are called premises.
     - Must be correct (well-reasoned, logically valid) and complete (clear, detailed).
+
+## Modus Ponens & Tollens:
+### Rule of **modus ponens**  (law of detachment)
+- the mode of affirming
+- $p$, $p \implies q$,
+- $\therefore q$ 
+### Rule of **modus tollens** (the mode of denying):
+  $\neg q , p \implies q$ 
+ $\therefore \neg p$  
+
+##  Syllogism Inference Rules
+#### Rule of hypothetical syllogism:
+$p \implies q$ 
+$q \implies r$ 
+$\therefore p \implies r$ 
+
+## Common Fallacies:
+### Fallacy of affirming the conclusion
+- "$p \implies q$ is true, and $q$ is true, so $p$ must be true" (No because $F \implies T$ is true)
+* Ex: If you do every problem in the book, you will learn discrete mathematics. You learned discrete mathematics
+### Fallacy of denying the hypothesis
+* $p \implies q$ and $\neg p$ does not imply $\neg q$  
+
+## Interference Rules for Quantifiers
+### Universal Instantiation
+### Universal generalization
+### Existential instantiation
+### Existential generalization
+
 

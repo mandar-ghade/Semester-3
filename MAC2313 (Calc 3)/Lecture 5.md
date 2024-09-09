@@ -20,3 +20,24 @@ $$
 ![[MAC2313 Lecture 5 Image 1.png]]
 
 ![[MAC2313 Lecture 5 Image 2.png]]
+
+Two planes that are not parallel intersect in a straight line, and the angle $\theta$ between the two planes is defined as the **acute angle** between their normal vectors.
+
+### Line of Intersection:
+Normal vectors are perpendicular to the direction vector.
+$\vec n_1 \bot \vec v$
+$\vec n_2 \bot \vec v$
+$\therefore \cross{\vec n_1}{\vec n_2}=\vec v$ 
+
+
+## Distance
+The distance D from a point $P_1(x_1, y_1, z_2)$ to the plane $ax+by+cz+d=0$ is:
+$$\wrap{
+D & = \frac{|ax_1+by_1+cz_1+d|}{\sqrt{a_2+b_2+c_2}} \\
+  & = \mag{\vec u}\mag{\cos \theta} \\
+  & = \mag{\vec u}\pwrap{\frac{\mag{\dot{\vec u}{\vec n}}}{\mag{\vec u}\mag{\vec n}}} \\ 
+  & = \mag{\vec u}\pwrap{\frac{\mag{\dot{\vec u}{\vec n}}}{\mag{\vec n}}}
+}$$
+### Distance between two planes
+
+Pick a point that satisfies either plane equation given, then choose the other's normal vector components to plug in the formula to get the distance between the two planes.
