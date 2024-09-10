@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CHM2210 (Orgo)/Lecture 7.md",
+                "file": "MAC2313 (Calc 3)/Lecture 7.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CHM2210 (Orgo)/Lecture 7.md",
+                "file": "MAC2313 (Calc 3)/Lecture 7.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CHM2210 (Orgo)/Lecture 7.md",
+                "file": "MAC2313 (Calc 3)/Lecture 7.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CHM2210 (Orgo)/Lecture 7.md"
+                "file": "MAC2313 (Calc 3)/Lecture 7.md"
               }
             }
           }
@@ -148,13 +148,14 @@
   },
   "active": "b7c264ef92ee8615",
   "lastOpenFiles": [
-    "CHM2210 (Orgo)/Lecture 1.md",
+    "MAC2313 (Calc 3)/Lecture 6.md",
     "CHM2210 (Orgo)/Lecture 7.md",
     "MAC2313 (Calc 3)/Lecture 7.md",
-    "CHM2210 (Orgo)/Images/Orgo Lecture 7.pdf",
+    "MAC2313 (Calc 3)/Images/MAC2313 Lecture 7 Image 3.png",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 7 Image 2.png",
+    "CHM2210 (Orgo)/Lecture 1.md",
+    "CHM2210 (Orgo)/Images/Orgo Lecture 7.pdf",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 7 Image 1.png",
-    "MAC2313 (Calc 3)/Lecture 6.md",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 6 Image 3.png",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 6 Image 2 Part 2.png",
     "CHM2210 (Orgo)/Lecture 6.md",
@@ -184,7 +185,6 @@
     "MAC2313 (Calc 3)/Lecture 3.md",
     "MAC2313 (Calc 3)/Lecture 2.md",
     "MAC2313 (Calc 3)/Lecture 1.md",
-    "CHM2210 (Orgo)/Images/Orgo Lecture 4 Page 2.png",
     "Pasted image 20240826211444.png.md",
     "CHM2210 (Orgo)/Images.md",
     "[!.md",
