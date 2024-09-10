@@ -20,3 +20,5 @@ $$
 
 ![[Images/MAC2313 Lecture 6 Image 1.png]]
 ![[Images/MAC2313 Lecture 6 Image 2.png]]
+![[Images/MAC2313 Lecture 6 Image 2 Part 2.png]]
+![[Images/MAC2313 Lecture 6 Image 3.png]]
