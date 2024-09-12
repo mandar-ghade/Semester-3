@@ -71,7 +71,6 @@ void IFF::get_truth_table() {
     throw std::runtime_error("Not implemented yet.");
 }
 
-
 void Implies::dbg() {
     throw std::runtime_error("Not implemented yet.");
 }
@@ -79,7 +78,7 @@ std::string Implies::to_string() {
     throw std::runtime_error("Not implemented yet.");
 }
 bool Implies::calculate() {
-    return !(left->calculate() && !right->calculate());
+    return (!left->calculate() || right->calculate());
 }
 void Implies::get_truth_table() {
     throw std::runtime_error("Not implemented yet.");

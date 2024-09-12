@@ -48,13 +48,13 @@ $$\forall x P(x) \iff P(a) \land P(b) \land P(c) \land ...$$
 $$\exists x P(x) \iff P(a) \lor P(b) \lor P(c) \lor ...$$
 
 #### Scope of Quantifiers
-- The part of a logical expression to which a quantifier is applifed.
+- The part of a logical expression to which a quantifier is applied.
 - Scope exists inside each parenthesis.
 - Each variable $x, y$ exist independently in their own scopes. (self-note)
 
 ##### Free and Bound Variables
 - An expr $P(x)$ has a free variable $x$ (meaning $x$ undefined)
-- Predicate does not make sense without quantiifer.
+- Predicate does not make sense without quantifier.
 - An expression with *zero* free variables is an actual proposition.
 - E.g. $P(x), \text{where x = 3}$ is another way to bind $x$
 
@@ -65,9 +65,9 @@ $$
 \forall \text{xyz} \text{P(x,y,z)}
 $$
 - Since they use the same quantifier their orders can change.
-- Sometimes, the universe of discourse is restrited within the quantification.
-    - e.g. : $\forall x \gt 0 \text{P(x)}$: "For all $x$ that are greater than zero, P($x$)."
-    - e.g. : $\exists x \gt 0 \text{P(x)}$: "There is an $x$ greater than zero such that P($x$)"
+- Sometimes, the universe of discourse is restricted within the quantification.
+    - e.g. : $\forall x \gt 0 \space\text{P(x)}$: "For all $x$ that are greater than zero, P($x$)."
+    - e.g. : $\exists x \gt 0 \space\text{P(x)}$: "There is an $x$ greater than zero such that P($x$)"
 
 
 #### Defining New Quantifiers

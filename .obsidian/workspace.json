@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "MAC2313 (Calc 3)/Lecture 7.md",
+                "file": "COT3100 (Discrete)/Lecture 5.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "MAC2313 (Calc 3)/Lecture 7.md",
+                "file": "COT3100 (Discrete)/Lecture 5.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "MAC2313 (Calc 3)/Lecture 7.md",
+                "file": "COT3100 (Discrete)/Lecture 5.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "MAC2313 (Calc 3)/Lecture 7.md"
+                "file": "COT3100 (Discrete)/Lecture 5.md"
               }
             }
           }
@@ -148,9 +148,21 @@
   },
   "active": "b7c264ef92ee8615",
   "lastOpenFiles": [
-    "MAC2313 (Calc 3)/Lecture 6.md",
-    "CHM2210 (Orgo)/Lecture 7.md",
+    "Discrete Proof Lecture 5.pdf",
+    "COT3100 (Discrete)/Lecture 4.md",
+    "COT3100 (Discrete)/Lecture 5.md",
+    "CHM2210 (Orgo)/Lecture 8.md",
+    "Orgo Lecture 8.pdf",
     "MAC2313 (Calc 3)/Lecture 7.md",
+    "MAC2313 (Calc 3)/Lecture 3.md",
+    "MAC2313 (Calc 3)/Lecture 2.md",
+    "MAC2313 (Calc 3)/Lecture 1.md",
+    "CHM2210 (Orgo)/Lecture 7.md",
+    "COT3100 (Discrete)/Lecture 1.md",
+    "COT3100 (Discrete)/Lecture 3.md",
+    "MAC2313 (Calc 3)/Lecture 4.md",
+    "MAC2313 (Calc 3)/Lecture 5.md",
+    "MAC2313 (Calc 3)/Lecture 6.md",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 7 Image 3.png",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 7 Image 2.png",
     "CHM2210 (Orgo)/Lecture 1.md",
@@ -159,18 +171,13 @@
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 6 Image 3.png",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 6 Image 2 Part 2.png",
     "CHM2210 (Orgo)/Lecture 6.md",
-    "MAC2313 (Calc 3)/Lecture 5.md",
-    "MAC2313 (Calc 3)/Lecture 4.md",
-    "COT3100 (Discrete)/Lecture 3.md",
     "CHM2210 (Orgo)/Lecture 5.md",
     "COP3503C (Prog 2)/PropLogic/main.cpp~",
-    "COT3100 (Discrete)/Lecture 4.md",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 6 Image 2.png",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 6 Image 1.png",
     "CHM2210 (Orgo)/Images/Orgo Lecture 6 Image 3.png",
     "CHM2210 (Orgo)/Images/Orgo Lecture 6 Image 2.png",
     "CHM2210 (Orgo)/Images/Orgo Lecture 6 Image 1.png",
-    "COT3100 (Discrete)/Lecture 1.md",
     "COP3503C (Prog 2)/Lab1/lab1",
     "CHM2210 (Orgo)/Lecture 4.md",
     "COP3503C (Prog 2)/PropLogic/symbol.h~",
@@ -179,12 +186,8 @@
     "COP3503C (Prog 2)/PropLogic/unary.cpp~",
     "COP3503C (Prog 2)/PropLogic/operator.cpp~",
     "COP3503C (Prog 2)/PropLogic/operator.cpp",
-    "COP3503C (Prog 2)/PropLogic/unary.h~",
     "CHM2210 (Orgo)/Lecture 3.md",
     "CHM2210 (Orgo)/Lecture 2.md",
-    "MAC2313 (Calc 3)/Lecture 3.md",
-    "MAC2313 (Calc 3)/Lecture 2.md",
-    "MAC2313 (Calc 3)/Lecture 1.md",
     "Pasted image 20240826211444.png.md",
     "CHM2210 (Orgo)/Images.md",
     "[!.md",
