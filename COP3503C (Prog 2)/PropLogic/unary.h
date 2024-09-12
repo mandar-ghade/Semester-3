@@ -5,9 +5,9 @@
 
 class Unary: public Operator {
 protected:
-    std::shared_ptr<Operator> wrapped_expr;
+    Operator& wrapped_expr;
 public:
-    Unary(std::shared_ptr<Operator> op): wrapped_expr(op) {}
+    Unary(Operator& op): wrapped_expr(op) {}
     std::string to_string() override;
     bool calculate() override;
     void dbg() override;
@@ -16,7 +16,7 @@ public:
 
 class Not: public Unary {
 public:
-    Not(std::shared_ptr<Operator> op) : Unary(op) {}
+    Not(Operator& op) : Unary(op) {}
     std::string to_string() override;
     bool calculate() override;
     void dbg() override;

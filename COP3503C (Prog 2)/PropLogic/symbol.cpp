@@ -2,7 +2,7 @@
 #include "symbol.h"
 
 std::string Symbol::to_string() {
-    return this->str;
+    return this->str + " = " + (truth_value ? "true" : "false");
 }
 
 void Symbol::dbg() {

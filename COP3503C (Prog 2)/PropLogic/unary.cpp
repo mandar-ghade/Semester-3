@@ -1,5 +1,8 @@
 #include "unary.h"
+#include "binary.h"
+#include <iostream>
 #include <stdexcept>
+
 std::string Unary::to_string() {
     throw std::runtime_error("Unary: to_string should've been defined");
 }
@@ -14,10 +17,11 @@ void Unary::get_truth_table() {
 }
 
 std::string Not::to_string() {
-    return "";
+    return "Not {" + wrapped_expr.to_string() + "} = " + bool_to_str(calculate());
 }
 
 void Not::dbg() {
+    std::cout << to_string() << '\n';
     return;
 }
 
@@ -26,5 +30,5 @@ void Not::get_truth_table() {
 }
 
 bool Not::calculate() {
-    return !wrapped_expr->calculate();
+    return !wrapped_expr.calculate();
 }

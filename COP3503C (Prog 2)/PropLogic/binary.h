@@ -4,14 +4,16 @@
 #include <memory>
 #include <vector>
 
+std::string bool_to_str(bool b); 
+
 class Binary: public Operator {
 protected:
-    std::shared_ptr<Operator> left;
-    std::shared_ptr<Operator> right;
+    Operator& left;
+    Operator& right;
 public:
     Binary(
-        std::shared_ptr<Operator> left,
-        std::shared_ptr<Operator> right
+        Operator& left,
+        Operator& right
     ): left(left), right(right) {}
     void dbg() override;
     std::string to_string() override;
@@ -22,8 +24,8 @@ public:
 class And: public Binary {
 public:
     And(
-        std::shared_ptr<Operator> left,
-        std::shared_ptr<Operator> right
+        Operator& left,
+        Operator& right
     ): Binary(left, right) {}
     void dbg() override;
     std::string to_string() override;
@@ -34,8 +36,8 @@ public:
 class Or: public Binary {
 public:
     Or(
-        std::shared_ptr<Operator> left,
-        std::shared_ptr<Operator> right
+        Operator& left,
+        Operator& right
     ): Binary(left, right) {}
     void dbg() override;
     std::string to_string() override;
@@ -46,8 +48,8 @@ public:
 class Xor: public Binary {
 public:
     Xor(
-        std::shared_ptr<Operator> left,
-        std::shared_ptr<Operator> right
+        Operator& left,
+        Operator& right
     ): Binary(left, right) {}
     void dbg() override;
     std::string to_string() override;
@@ -58,8 +60,8 @@ public:
 class IFF: public Binary {
 public:
     IFF(
-        std::shared_ptr<Operator> left,
-        std::shared_ptr<Operator> right
+        Operator& left,
+        Operator& right
     ): Binary(left, right) {}
     void dbg() override;
     std::string to_string() override;
@@ -70,8 +72,8 @@ public:
 class Implies: public Binary {
 public:
     Implies(
-        std::shared_ptr<Operator> left,
-        std::shared_ptr<Operator> right
+        Operator& left,
+        Operator& right
     ): Binary(left, right) {}
     void dbg() override;
     std::string to_string() override;

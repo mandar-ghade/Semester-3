@@ -16,3 +16,4 @@ public:
     virtual void get_truth_table() = 0;
     //virtual std::vector<std::vector<bool>> truth_table_as_list() = 0;
 };
+
