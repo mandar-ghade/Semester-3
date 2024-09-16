@@ -111,6 +111,11 @@ $p \implies q$
 $q \implies r$ 
 $\therefore p \implies r$ 
 
+#### Rule of disjunctive syllogism
+$p\lor q$
+$\neg p$
+$\therefore q$ 
+
 ## Common Fallacies:
 ### Fallacy of affirming the conclusion
 - "$p \implies q$ is true, and $q$ is true, so $p$ must be true" (No because $F \implies T$ is true)

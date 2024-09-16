@@ -4,22 +4,107 @@
     "type": "split",
     "children": [
       {
-        "id": "570e678ecde548fb",
+        "id": "8533981c92db6c3a",
         "type": "tabs",
         "children": [
           {
-            "id": "b7c264ef92ee8615",
+            "id": "7a368b61bd8554a6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "COT3100 (Discrete)/Lecture 5.md",
+                "file": "CHM2210 (Orgo)/Lecture 9.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "715399e388569d65",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Lecture 9 Written Notes.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f86deefd41c0bc80",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Conformations.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "65f7f2c79e208313",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Alkane Conformations.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "9b4ceb942a753bee",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Eclipse.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "e6667c2ecf134307",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Gauche.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c2e66240c0180bcb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Anti.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "4e4be5d14682fc8d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Totally Eclipse.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -85,7 +170,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "COT3100 (Discrete)/Lecture 5.md",
+                "file": "Alkane Conformations.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +187,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "COT3100 (Discrete)/Lecture 5.md",
+                "file": "Alkane Conformations.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +210,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "COT3100 (Discrete)/Lecture 5.md"
+                "file": "Alkane Conformations.md"
               }
             }
           }
@@ -146,51 +231,54 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "445541114c4881d4",
+  "active": "65f7f2c79e208313",
   "lastOpenFiles": [
-    "COT3100 (Discrete)/misc",
-    "COT3100 (Discrete)/misc/Discrete Proof Lecture 5.pdf",
-    "COT3100 (Discrete)/Lecture 4.md",
-    "COT3100 (Discrete)/Lecture 5.md",
-    "CHM2210 (Orgo)/Lecture 8.md",
-    "CHM2210 (Orgo)/Images/Orgo Lecture 8.pdf",
-    "MAC2313 (Calc 3)/Lecture 7.md",
-    "MAC2313 (Calc 3)/Lecture 3.md",
+    "Conformations.md",
+    "Lecture 9 Written Notes.md",
+    "CHM2210 (Orgo)/Lecture 9.md",
+    "Alkane Conformations.md",
+    "Eclipse.md",
+    "Gauche.md",
+    "Anti.md",
+    "Totally Eclipse.md",
+    "Orgo Lecture 9 Written.pdf",
+    "Torsional Strain.md",
+    "Pasted image 20240913220942.png",
+    "Pasted image 20240913220807.png",
+    "MAC2313 (Calc 3)/Lecture 6.md",
     "MAC2313 (Calc 3)/Lecture 2.md",
-    "MAC2313 (Calc 3)/Lecture 1.md",
-    "CHM2210 (Orgo)/Lecture 7.md",
-    "COT3100 (Discrete)/Lecture 1.md",
-    "COT3100 (Discrete)/Lecture 3.md",
+    "MAC2313 (Calc 3)/Lecture 3.md",
     "MAC2313 (Calc 3)/Lecture 4.md",
     "MAC2313 (Calc 3)/Lecture 5.md",
-    "MAC2313 (Calc 3)/Lecture 6.md",
+    "MAC2313 (Calc 3)/Lecture 7.md",
+    "Cycloalkanes Conformations.md",
+    "MAC2313 (Calc 3)/Lecture 1.md",
+    "MAC2313 (Calc 3)/scripts/lq_7.ipynb",
+    "MAC2313 Lecture 7 Image 4.png",
+    "Tortional Strain.md",
+    "Untitled.md",
+    "Alkanes.md",
+    "CHM2210 (Orgo)/Lecture 7.md",
+    "CHM2210 (Orgo)/Lecture 6.md",
+    "CHM2210 (Orgo)/Lecture 8.md",
+    "Sterics.md",
+    "2024-09-13.md",
+    "Hello.md",
+    "Untitled.canvas",
+    "COT3100 (Discrete)/misc",
+    "COT3100 (Discrete)/misc/Discrete Proof Lecture 5.pdf",
+    "CHM2210 (Orgo)/Images/Orgo Lecture 8.pdf",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 7 Image 3.png",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 7 Image 2.png",
-    "CHM2210 (Orgo)/Lecture 1.md",
     "CHM2210 (Orgo)/Images/Orgo Lecture 7.pdf",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 7 Image 1.png",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 6 Image 3.png",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 6 Image 2 Part 2.png",
-    "CHM2210 (Orgo)/Lecture 6.md",
-    "CHM2210 (Orgo)/Lecture 5.md",
     "COP3503C (Prog 2)/PropLogic/main.cpp~",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 6 Image 2.png",
     "MAC2313 (Calc 3)/Images/MAC2313 Lecture 6 Image 1.png",
-    "CHM2210 (Orgo)/Images/Orgo Lecture 6 Image 3.png",
-    "CHM2210 (Orgo)/Images/Orgo Lecture 6 Image 2.png",
-    "CHM2210 (Orgo)/Images/Orgo Lecture 6 Image 1.png",
     "COP3503C (Prog 2)/Lab1/lab1",
-    "CHM2210 (Orgo)/Lecture 4.md",
     "COP3503C (Prog 2)/PropLogic/symbol.h~",
-    "COP3503C (Prog 2)/PropLogic/logic",
-    "COP3503C (Prog 2)/PropLogic/operator.h~",
-    "COP3503C (Prog 2)/PropLogic/unary.cpp~",
-    "COP3503C (Prog 2)/PropLogic/operator.cpp~",
-    "CHM2210 (Orgo)/Lecture 3.md",
-    "CHM2210 (Orgo)/Lecture 2.md",
-    "Pasted image 20240826211444.png.md",
-    "CHM2210 (Orgo)/Images.md",
-    "[!.md",
-    "[.md"
+    "COP3503C (Prog 2)/PropLogic/logic"
   ]
 }
