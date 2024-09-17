@@ -5,9 +5,24 @@
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
-  "collapse-color-groups": true,
-  "colorGroups": [],
-  "collapse-display": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "mac2313",
+      "color": {
+        "a": 1,
+        "rgb": 6084208
+      }
+    },
+    {
+      "query": "chm2210",
+      "color": {
+        "a": 1,
+        "rgb": 16712965
+      }
+    }
+  ],
+  "collapse-display": false,
   "showArrow": false,
   "textFadeMultiplier": 0,
   "nodeSizeMultiplier": 1,
@@ -17,6 +32,6 @@
   "repelStrength": 10,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 1.1358658076199397,
+  "scale": 1.3175367628260048,
   "close": false
 }

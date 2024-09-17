@@ -1,3 +1,5 @@
-# Alkanes and Cycloalkanes
+#lecture7
+#orgo
+#chm2210
 
-![[./Images/Orgo Lecture 7.pdf]]
+Notes: [[./Images/Orgo Lecture 7.pdf|Alkanes and Cycloalkanes (Written)]]

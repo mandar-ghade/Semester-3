@@ -1,3 +1,12 @@
+#mac2313 
+#lecture3
+#dot-product
+#orthogonal
+#null-vector
+#projections
+#unit-vector 
+#work
+#torque
 # Dot Product
 
 Two non-zero vectors are orthogonal (perpendicular) if the angle between them $\theta = \frac{\pi}{2}$

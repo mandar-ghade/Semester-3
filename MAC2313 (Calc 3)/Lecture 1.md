@@ -1,3 +1,8 @@
+#mac2313 
+#lecture1
+#3d-rectangular-system
+#distance-formula
+#equation-of-sphere
 # 3-D Rectangular System
 
 ## 3D Rectangular Coordinate System ($R^3$)

@@ -1,3 +1,11 @@
+#lecture2
+#orgo
+#formalcharge
+#electron-arrangement
+#geometry
+#chm2210
+
+# Formal Charge and Molecular Shape
 -  Formal Charge
 - All atoms need to be neutral in lewis structure
 - Used to keep track of e^- in molecules

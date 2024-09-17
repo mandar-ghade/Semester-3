@@ -1,3 +1,7 @@
+#lecture1
+#electron-config
+#orgo
+#chm2210
 ## Review from General Chemistry
 - Structure of the Atom (Protons + Neutrons = mass of atom)
 

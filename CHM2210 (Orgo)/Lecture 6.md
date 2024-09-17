@@ -1,3 +1,6 @@
+#lecture6
+#orgo
+#chm2210
 # Resonance and Resonance Structures
 
 Resonance - represents movement of electrons.

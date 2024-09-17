@@ -1,3 +1,8 @@
+#mac2313 
+#lecture2
+#unit-vector 
+#position-vector
+#vectors
 # Vectors
 $\vec{u}$ and $\vec{v}$ are parallel if $\vec{v}=c\vec{u}$
 - Because same direction, even though magnitude can change.

@@ -1,3 +1,9 @@
+#lecture4
+#vespr 
+#drugs
+#hybridization
+#orgo
+#chm2210
 # Lecture 4
 
 ## VESPR

@@ -1,3 +1,7 @@
+#lecture3
+#functionalgroups
+#orgo
+#chm2210
 # Functional Groups:
 - Collection of atoms bonded in a particular way that import predictable properties/reactivities to a molecule.
 
