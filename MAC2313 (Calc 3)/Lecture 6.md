@@ -22,3 +22,36 @@ $$
 ![[Images/MAC2313 Lecture 6 Image 2.png]]
 ![[Images/MAC2313 Lecture 6 Image 2 Part 2.png]]
 ![[Images/MAC2313 Lecture 6 Image 3.png]]
+
+
+## Conic Sections
+
+### Parabola
+$$y=x^2$$ $$x=y^2$$
+## Hyperbola
+$$x^2-y^2=1$$
+$$y^2-x^2=1$$
+### Cylinder
+Parabola but in 3D
+
+### Circle
+$$x^2+y^2=1$$
+### Ellipse
+
+$$\frac{x^2}a+\frac{y^2}b=1$$
+## Surface
+### Ellipsoid
+$$\frac{x^2}{a}+\frac{y^2}{b}+\frac{z^2}{c} = 0$$
+### Hyperbola of 1 Sheet
+$$\frac{x^2}{a}+\frac{y^2}{b}-\frac{z^2}{c} = 1$$
+### Hyperbola of 2 Sheets
+$$-\frac{x^2}{a}-\frac{y^2}{b}+\frac{z^2}{c} = 0$$
+### Elliptic Cone
+$$\frac{x^2}{a}+\frac{y^2}{b}-\frac{z^2}{c} = 0$$
+
+### Elliptic Paraboloid
+$$z=\frac{x^2}a+\frac{y^2}b$$
+
+### Hyperbolic Paraboloid
+$$z=\frac{y^2}b-\frac{x^2}a$$
+- Has a saddle point (min of one and max of the other)

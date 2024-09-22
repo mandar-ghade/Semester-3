@@ -1,3 +1,9 @@
+---
+id: Nomenclature of Cycloalkanes
+aliases: []
+tags: []
+---
+
 1) Mono-substituted:
 	-  Ex: $\ce{methylcyclohexane}$ 
 2) Disubstituted:
@@ -10,3 +16,5 @@
 		- Alphabetizing is irrelevent. 
 		- Aka which numbers are smaller overall.
 	- Naming same as usual.
+$5 + \frac1 2 = 5$
+

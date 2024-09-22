@@ -1,4 +1,10 @@
-$$
+---
+id: Normal Vectors
+aliases: []
+tags: []
+---
+
+- [ ] $$
 \newcommand{\bhat}{\hat B}
 $$
 #mac2313 
