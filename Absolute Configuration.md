@@ -17,3 +17,4 @@
 3) Substituents (groups) with multiple ($\ce{C=O, C#O, C=C}$) are given single bond equivalents (fiction; also called "phantoms")
 
 See from the perspective that is lowest priority.
+
