@@ -1,0 +1,16 @@
+#include "LinkedList.h"
+
+int main() {
+	LinkedList<int> list;
+	list.InsertAt(1, 0);
+	list.InsertAt(2, 1);
+	list.InsertAt(3, 2);
+	list.InsertAt(7, 1);
+	//list.PrintForward();
+	LinkedList<int> list2;
+	//list2.RemoveTail();
+	list2 = list;
+	list2.PrintForward();
+	list2.Remove(3);
+	return 0;
+}
