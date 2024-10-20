@@ -1,3 +1,4 @@
+#include <fstream>
 #include <iostream>
 
 template<typename T>
@@ -87,3 +88,4 @@ public:
 		return capacity;
 	}
 };
+
