@@ -36,15 +36,21 @@ public:
 	std::vector<std::unique_ptr<Pixel>> pixels;
 	TGAFile(Header& header, std::vector<std::unique_ptr<Pixel>>& pixels): header(header), pixels(std::move(pixels)) {};
 	static TGAFile from_path(std::string& name);
+	static TGAFile from_files(TGAFile& red, TGAFile& green, TGAFile& blue);
 	void write_to_path(std::string& path);
+	void write_to_path_upside_down(std::string& path);
+	void write_blue_to_path(std::string& path);
+	void write_green_to_path(std::string& path);
+	void write_red_to_path(std::string& path);
 	TGAFile multiply(TGAFile& rhs);
 	TGAFile screen(TGAFile& rhs);
 	TGAFile subtract(TGAFile& rhs);
 	TGAFile addition(TGAFile& rhs);
 	TGAFile overlay(TGAFile& rhs);
-	TGAFile multiply_channel_B();
-	TGAFile multiply_channel_G();
-	TGAFile multiply_channel_R();
+	TGAFile add(u8 B_ = 0, u8 G_ = 0, u8 R_ = 0);
+	TGAFile scale_blue(u8 B_ = 0);
+	TGAFile scale_green(u8 G_ = 0);
+	TGAFile scale_red(u8 R_ = 0);
 };
 
 Pixel* next_pixel(std::fstream& stream);
