@@ -87,9 +87,9 @@ void test_7() {
 
 void test_8() {
 	std::string fp_1 = "input/car.tga";
-	std::string red_output_path = "output/part8_R.tga";
-	std::string green_output_path = "output/part8_G.tga";
-	std::string blue_output_path = "output/part8_B.tga";
+	std::string red_output_path = "output/part8_r.tga";
+	std::string green_output_path = "output/part8_g.tga";
+	std::string blue_output_path = "output/part8_b.tga";
 	TGAFile f1 = TGAFile::from_path(fp_1);
 	f1.write_red_to_path(red_output_path);
 	f1.write_green_to_path(green_output_path);
@@ -111,7 +111,7 @@ void test_9() {
 
 void test_10() {
 	std::string fp_1 = "input/text2.tga";
-	std::string output_path = "output/test_10.tga";
+	std::string output_path = "output/part10.tga";
 	TGAFile f1 = TGAFile::from_path(fp_1);
 	f1.write_to_path_upside_down(output_path);
 }
