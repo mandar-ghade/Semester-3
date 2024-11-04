@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cstring>
 #include <iostream>
 #include <fstream>
 #include "header.h"
@@ -116,17 +117,111 @@ void test_10() {
 	f1.write_to_path_upside_down(output_path);
 }
 
+void multiply();
+
+void run_cli() {
+	std::string option;
+}
+
+void print_help() {
+	std::cout << "Project 2: Image Processing, Fall 2024\n\n";
+	std::cout << "Usage:" << "\n";
+	std::cout << "\t./project2 [output] [firstImage] [method] [...]\n";
+}
+
+bool valid_file_input(char* output_file) {
+	size_t period_index = 0;
+	bool contains_period = false;
+	std::string output_file_str(output_file, strlen(output_file));
+	for (size_t i = 0; i < strlen(output_file); i++) {
+		if (output_file[i] == '\n') {
+			continue;
+		} else if (output_file[i] == '.' && !contains_period) {
+			contains_period = true;
+			period_index = i;
+		} else if (output_file[i] == '.' && contains_period) {
+			return false;
+		} else if (contains_period) {
+			if (i != period_index + 1) {
+				return false;
+			} else if (i + 3 != strlen(output_file)) {
+				return false;
+			} else {
+				std::string extension = output_file_str.substr(strlen(output_file) - 3, 3);
+				if (extension == "tga") {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+	}
+	return contains_period;
+
+	//std::string extension = output_file.substr(strlen(output_path) - 3, 3);
+	//std::cout << extension << '\n';
+	return true;
+}
+
+bool get_if_file_exists(std::string &name) {
+	std::fstream stream(name, std::ios_base::in | std::ios_base::binary);
+	return stream.is_open();
+}
+void parse_cli(int argc, char* argv[]) {
+	if (argc == 1) {
+		return;
+	}
+	if (argc == 2) {
+		print_help();
+		return;
+	}
+	if (argc == 3) {
+		std::cout << "Invalid method name" << '\n';
+		return;
+	}
+	if (!valid_file_input(argv[1]) || !valid_file_input(argv[2])) {
+		std::cout << "Invalid file name." << '\n';
+		return;
+	}
+	std::string output_file_name(argv[1], strlen(argv[1]));
+	std::string tracking_image_name(argv[2], strlen(argv[2]));
+	if (!std::strcmp(argv[1], "--help")) {
+		print_help();
+	}
+	TGAFile tracking_image = TGAFile::from_path(tracking_image_name);
+	tracking_image = TGAFile::from_path(tracking_image_name);
+	for (int i = 3; i < argc; i++) {
+		if (!strcmp(argv[i], "multiply")) {
+			if (i + 1 >= argc) {
+				std::cout << "Missing argument.\n";
+				return;
+			} else if (!valid_file_input(argv[i + 1])) {
+				std::cout << "Invalid argument, invalid file name.\n";
+				return;
+			}
+			std::string target_file = argv[i + 1];
+			if (!get_if_file_exists(target_file)) {
+				std::cout << "Invalid argument, file does not exist.\n";
+				return;
+			} else {
+				tracking_image = 
+			}
+		}
+	}
+}
+
 int main(int argc, char* argv[]) {
-	test_1();
-	test_2();
-	test_3();
-	test_4();
-	test_5();
-	test_6();
-	test_7();
-	test_8();
-	test_9();
-	test_10();
+	parse_cli(argc, argv);
+//	test_1();
+//	test_2();
+//	test_3();
+//	test_4();
+//	test_5();
+//	test_6();
+//	test_7();
+//	test_8();
+//	test_9();
+//	test_10();
 	return 0;
 }
 

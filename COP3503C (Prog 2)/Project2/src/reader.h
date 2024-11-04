@@ -51,6 +51,7 @@ public:
 	TGAFile scale_blue(u8 B_ = 0);
 	TGAFile scale_green(u8 G_ = 0);
 	TGAFile scale_red(u8 R_ = 0);
+	TGAFile& operator=(const TGAFile& file);
 };
 
 Pixel* next_pixel(std::fstream& stream);

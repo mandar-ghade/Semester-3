@@ -2,10 +2,17 @@
 #include "header.h"
 #include <fstream>
 
+TGAFile& TGAFile::operator=(const TGAFile& file) {
+	this->header = std::move(file.header);
+	pixels.clear();
+	this->pixels = std::move(file.pixels);
+	return *this;
+}
+
 TGAFile TGAFile::from_path(std::string& name) {
 	std::fstream stream(name, std::ios_base::in | std::ios_base::binary);
 	if (!stream.is_open()) {
-		throw std::runtime_error("File could not be found.");
+		throw std::runtime_error("File does not exist.");
 	}
 	TGAFile f = from_stream(stream);
 	return f;
@@ -437,3 +444,4 @@ TGAFile TGAFile::scale_red(u8 R_) {
 	TGAFile f(h, vec);
 	return f;
 }
+
