@@ -1,6 +1,21 @@
 #include <iostream>
 #include <fstream>
 #include "header.h"
+Header& Header::operator=(const Header& rhs) {
+	this->id_length = rhs.id_length;
+	this->color_map_type = rhs.color_map_type; 
+	this->image_type = rhs.image_type;
+	this->color_map_origin = rhs.color_map_origin;
+	this->color_map_length = rhs.color_map_length;
+	this->color_map_depth = rhs.color_map_depth;
+	this->x_origin = rhs.x_origin;
+	this->y_origin = rhs.y_origin;
+	this->width = rhs.width;
+	this->height = rhs.height;
+	this->pixel_depth = rhs.pixel_depth;
+	this->image_descriptor = rhs.image_descriptor;
+	return *this;
+}
 
 Header from_path(std::string& str) {
 	std::fstream stream(str, std::ios_base::in | std::ios_base::binary);

@@ -26,6 +26,7 @@ public:
 	std::tuple<u8, u8, u8> addition(Pixel& rhs);
 	std::tuple<u8, u8, u8> overlay(Pixel& rhs);
 	std::tuple<u8, u8, u8> as_tuple();
+	Pixel& operator=(const Pixel& rhs);
 };
 
 class TGAFile {
@@ -34,6 +35,7 @@ private:
 public:
 	Header header;
 	std::vector<std::unique_ptr<Pixel>> pixels;
+	TGAFile(const TGAFile& file);
 	TGAFile(Header& header, std::vector<std::unique_ptr<Pixel>>& pixels): header(header), pixels(std::move(pixels)) {};
 	static TGAFile from_path(std::string& name);
 	static TGAFile from_files(TGAFile& red, TGAFile& green, TGAFile& blue);
@@ -42,12 +44,17 @@ public:
 	void write_blue_to_path(std::string& path);
 	void write_green_to_path(std::string& path);
 	void write_red_to_path(std::string& path);
+	TGAFile flip();
+	TGAFile onlyred();
+	TGAFile onlygreen();
+	TGAFile onlyblue();
 	TGAFile multiply(TGAFile& rhs);
 	TGAFile screen(TGAFile& rhs);
 	TGAFile subtract(TGAFile& rhs);
 	TGAFile addition(TGAFile& rhs);
 	TGAFile overlay(TGAFile& rhs);
 	TGAFile add(u8 B_ = 0, u8 G_ = 0, u8 R_ = 0);
+	TGAFile subtract(u8 B_ = 0, u8 G_ = 0, u8 R_ = 0);
 	TGAFile scale_blue(u8 B_ = 0);
 	TGAFile scale_green(u8 G_ = 0);
 	TGAFile scale_red(u8 R_ = 0);

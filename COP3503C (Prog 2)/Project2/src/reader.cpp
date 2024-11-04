@@ -2,10 +2,28 @@
 #include "header.h"
 #include <fstream>
 
+Pixel& Pixel::operator=(const Pixel& rhs) {
+	this->B = rhs.B;
+	this->G = rhs.G;
+	this->R = rhs.R;
+	return *this;
+}
+
+TGAFile::TGAFile(const TGAFile& file): header(file.header) {
+	for (unsigned int i = 0; i < file.pixels.size(); i++) {
+		Pixel* pixel_at = file.pixels.at(i).get();
+		this->pixels.push_back(std::unique_ptr<Pixel>(new Pixel(pixel_at->B, pixel_at->G, pixel_at->R)));
+	}
+}
+
 TGAFile& TGAFile::operator=(const TGAFile& file) {
-	this->header = std::move(file.header);
-	pixels.clear();
-	this->pixels = std::move(file.pixels);
+	if (this == &file) return *this;
+	this->header = file.header;
+	this->pixels.clear();
+	for (unsigned int i = 0; i < file.pixels.size(); i++) {
+		Pixel* pixel_at = file.pixels.at(i).get();
+		this->pixels.push_back(std::unique_ptr<Pixel>(new Pixel(pixel_at->B, pixel_at->G, pixel_at->R)));
+	}
 	return *this;
 }
 
@@ -162,6 +180,38 @@ std::tuple<u8, u8, u8> Pixel::overlay(Pixel& rhs) {
 
 std::tuple<u8, u8, u8> Pixel::as_tuple() {
 	return {this->B, this->G, this->R};
+}
+
+TGAFile TGAFile::flip() {
+	Header h = header;
+	int height = static_cast<int>(h.height);
+	int width = static_cast<int>(h.width);
+	std::vector<std::unique_ptr<Pixel>> vec(height * width);
+	const size_t pixels_size = this->pixels.size();
+	for (int row = 0; row < height; row++) {
+		for (int col = 0; col < width; col++) {
+			int new_idx = row*width + col;
+			int old_idx = (height-row-1)*width + width-col-1;
+			Pixel* old_pixel = pixels.at(old_idx).get();
+			Pixel* next_ptr = new Pixel(
+				old_pixel->B,
+				old_pixel->G,
+				old_pixel->R
+			);
+			vec[new_idx] = std::unique_ptr<Pixel>(next_ptr);
+		}
+	}
+	for (unsigned long i = 1; i < pixels_size + 1; i++) {
+		Pixel* next_ptr = new Pixel(
+			pixels.at(pixels_size - i).get()->B,
+			pixels.at(pixels_size - i).get()->G,
+			pixels.at(pixels_size - i).get()->R
+		);
+		std::unique_ptr<Pixel> next_unique_ptr(next_ptr);
+		vec.push_back(std::move(next_unique_ptr));
+	}
+	TGAFile f(h, vec);
+	return f;
 }
 
 TGAFile TGAFile::multiply(TGAFile& rhs) {
@@ -336,6 +386,7 @@ void TGAFile::write_to_path_upside_down(std::string& path) {
 	}
 }
 
+
 void TGAFile::write_blue_to_path(std::string& path) {
 	std::fstream stream(path, std::ios_base::out | std::ios_base::binary);
 	if (!stream.is_open()) {
@@ -375,6 +426,54 @@ void TGAFile::write_red_to_path(std::string& path) {
 	}
 }
 
+TGAFile TGAFile::onlyred() {
+	std::vector<std::unique_ptr<Pixel>> vec;
+	Header h = header;
+	for (unsigned long i = 0; i < pixels.size(); i++) {
+		Pixel* next_ptr = new Pixel(
+			pixels.at(i).get()->R,
+			pixels.at(i).get()->R,
+			pixels.at(i).get()->R
+		);
+		std::unique_ptr<Pixel> next_unique_ptr(next_ptr);
+		vec.push_back(std::move(next_unique_ptr));
+	}
+	TGAFile f(h, vec);
+	return f;
+}
+
+TGAFile TGAFile::onlygreen() {
+	std::vector<std::unique_ptr<Pixel>> vec;
+	Header h = header;
+	for (unsigned long i = 0; i < pixels.size(); i++) {
+		Pixel* next_ptr = new Pixel(
+			pixels.at(i).get()->G,
+			pixels.at(i).get()->G,
+			pixels.at(i).get()->G
+		);
+		std::unique_ptr<Pixel> next_unique_ptr(next_ptr);
+		vec.push_back(std::move(next_unique_ptr));
+	}
+	TGAFile f(h, vec);
+	return f;
+}
+
+TGAFile TGAFile::onlyblue() {
+	std::vector<std::unique_ptr<Pixel>> vec;
+	Header h = header;
+	for (unsigned long i = 0; i < pixels.size(); i++) {
+		Pixel* next_ptr = new Pixel(
+			pixels.at(i).get()->B,
+			pixels.at(i).get()->B,
+			pixels.at(i).get()->B
+		);
+		std::unique_ptr<Pixel> next_unique_ptr(next_ptr);
+		vec.push_back(std::move(next_unique_ptr));
+	}
+	TGAFile f(h, vec);
+	return f;
+}
+
 TGAFile TGAFile::add(u8 B_, u8 G_, u8 R_) {
 	Header h = this->header;
 	std::vector<std::unique_ptr<Pixel>> vec;
@@ -382,6 +481,26 @@ TGAFile TGAFile::add(u8 B_, u8 G_, u8 R_) {
 		u8 new_B = clamp(static_cast<float>(this->pixels.at(i).get()->B) + static_cast<float>(B_));
 		u8 new_G = clamp(static_cast<float>(this->pixels.at(i).get()->G) + static_cast<float>(G_));
 		u8 new_R = clamp(static_cast<float>(this->pixels.at(i).get()->R) + static_cast<float>(R_));
+		Pixel* next_ptr = new Pixel(
+			new_B, 
+			new_G,
+			new_R
+		);
+		std::unique_ptr<Pixel> next_unique_ptr(next_ptr);
+		vec.push_back(std::move(next_unique_ptr));
+	}
+	TGAFile f(h, vec);
+	return f;
+}
+
+
+TGAFile TGAFile::subtract(u8 B_, u8 G_, u8 R_) {
+	Header h = this->header;
+	std::vector<std::unique_ptr<Pixel>> vec;
+	for (unsigned int i = 0; i < this->pixels.size(); i++) {
+		u8 new_B = clamp(static_cast<float>(this->pixels.at(i).get()->B) - static_cast<float>(B_));
+		u8 new_G = clamp(static_cast<float>(this->pixels.at(i).get()->G) - static_cast<float>(G_));
+		u8 new_R = clamp(static_cast<float>(this->pixels.at(i).get()->R) - static_cast<float>(R_));
 		Pixel* next_ptr = new Pixel(
 			new_B, 
 			new_G,

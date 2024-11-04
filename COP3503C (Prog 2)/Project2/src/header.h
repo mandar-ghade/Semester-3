@@ -15,6 +15,7 @@ struct Header {
 	short height;
 	char pixel_depth; // bits of each pixel
 	char image_descriptor; // additional details about the image.
+	Header& operator=(const Header& rhs);
 	Header(
 		char id_length, 
 		char color_map_type,

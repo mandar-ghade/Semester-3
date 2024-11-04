@@ -126,7 +126,7 @@ void run_cli() {
 void print_help() {
 	std::cout << "Project 2: Image Processing, Fall 2024\n\n";
 	std::cout << "Usage:" << "\n";
-	std::cout << "\t./project2 [output] [firstImage] [method] [...]\n";
+	std::cout << "\t./project2.out [output] [firstImage] [method] [...]\n";
 }
 
 bool valid_file_input(char* output_file) {
@@ -134,9 +134,7 @@ bool valid_file_input(char* output_file) {
 	bool contains_period = false;
 	std::string output_file_str(output_file, strlen(output_file));
 	for (size_t i = 0; i < strlen(output_file); i++) {
-		if (output_file[i] == '\n') {
-			continue;
-		} else if (output_file[i] == '.' && !contains_period) {
+		if (output_file[i] == '.' && !contains_period) {
 			contains_period = true;
 			period_index = i;
 		} else if (output_file[i] == '.' && contains_period) {
@@ -167,51 +165,211 @@ bool get_if_file_exists(std::string &name) {
 	std::fstream stream(name, std::ios_base::in | std::ios_base::binary);
 	return stream.is_open();
 }
+
+bool is_valid_combined_arguments(int i, int argc, char* argv[]) {
+	if (i + 2 >= argc) {
+		std::cout << "Missing argument.\n";
+		return false;
+	}
+	if (!valid_file_input(argv[i + 1]) || !valid_file_input(argv[i + 2])) {
+		std::cout << "Invalid argument, invalid file name.\n";
+		return false;
+	}
+	std::string target_file_1 = argv[i + 1];
+	std::string target_file_2 = argv[i + 2];
+	if (!get_if_file_exists(target_file_1) || !get_if_file_exists(target_file_2)) {
+		std::cout << "Invalid argument, file does not exist.\n";
+		return false;
+	} else {
+		return true;
+	}
+}
+
+bool is_valid_argument(int i, int argc, char* argv[], bool expects_file) {
+	if (i + 1 >= argc) {
+		std::cout << "Missing argument.\n";
+		return false;
+	} else if (expects_file) {
+		if (!valid_file_input(argv[i + 1])) {
+			std::cout << "Invalid argument, invalid file name.\n";
+			return false;
+		}
+		std::string target_file = argv[i + 1];
+		if (!get_if_file_exists(target_file)) {
+			std::cout << "Invalid argument, file does not exist.\n";
+			return false;
+		} else {
+			return true;
+		}
+	} else if (!expects_file) {
+		try {
+			int _ = std::stoi(argv[i + 1]);
+			return true;
+		} catch (std::invalid_argument) {
+			std::cout << "Invalid argument, expected number.\n";
+			return false;
+		}
+	}
+	return true;
+}
+
 void parse_cli(int argc, char* argv[]) {
-	if (argc == 1) {
-		return;
+	if (argc <= 1) {
+		print_help();
 	}
 	if (argc == 2) {
-		print_help();
+		if (!strcmp(argv[1], "--help")) {
+			print_help();
+		} else if (!valid_file_input(argv[1])) {
+			std::cout << "Invalid file name." << '\n';
+		} else {
+			print_help();
+		}
 		return;
 	}
-	if (argc == 3) {
-		std::cout << "Invalid method name" << '\n';
-		return;
-	}
+	//if (argc == 3) {
+	//	if (!valid_file_input(argv[2])) {
+	//		std::cout << "Invalid file name." << '\n';
+	//		return;
+	//	} else {
+	//		//std::cout << "Invalid method name" << '\n';
+	//		//print_help();
+	//	}
+	//	return;
+	//}
 	if (!valid_file_input(argv[1]) || !valid_file_input(argv[2])) {
 		std::cout << "Invalid file name." << '\n';
 		return;
 	}
 	std::string output_file_name(argv[1], strlen(argv[1]));
 	std::string tracking_image_name(argv[2], strlen(argv[2]));
-	if (!std::strcmp(argv[1], "--help")) {
+	if (!strcmp(argv[1], "--help")) {
 		print_help();
 	}
+	if (!get_if_file_exists(tracking_image_name)) {
+		std::cout << "File does not exist.\n";
+		return;
+	}
 	TGAFile tracking_image = TGAFile::from_path(tracking_image_name);
-	tracking_image = TGAFile::from_path(tracking_image_name);
+	bool has_operation = false;
 	for (int i = 3; i < argc; i++) {
 		if (!strcmp(argv[i], "multiply")) {
-			if (i + 1 >= argc) {
-				std::cout << "Missing argument.\n";
-				return;
-			} else if (!valid_file_input(argv[i + 1])) {
-				std::cout << "Invalid argument, invalid file name.\n";
-				return;
-			}
+			if (!is_valid_argument(i, argc, argv, true)) return;
 			std::string target_file = argv[i + 1];
-			if (!get_if_file_exists(target_file)) {
-				std::cout << "Invalid argument, file does not exist.\n";
-				return;
+			TGAFile target = TGAFile::from_path(target_file);
+			tracking_image = tracking_image.multiply(target);
+			if (!has_operation) has_operation = true;
+			i += 1;
+		} else if (!strcmp(argv[i], "subtract")) {
+			if (!is_valid_argument(i, argc, argv, true)) return;
+			std::string target_file = argv[i + 1];
+			TGAFile target = TGAFile::from_path(target_file);
+			tracking_image = tracking_image.subtract(target);
+			if (!has_operation) has_operation = true;
+			i += 1;
+		} else if (!strcmp(argv[i], "overlay")) {
+			if (!is_valid_argument(i, argc, argv, true)) return;
+			std::string target_file = argv[i + 1];
+			TGAFile target = TGAFile::from_path(target_file);
+			tracking_image = tracking_image.overlay(target);
+			if (!has_operation) has_operation = true;
+			i += 1;
+		} else if (!strcmp(argv[i], "screen")) {
+			if (!is_valid_argument(i, argc, argv, true)) return;
+			std::string target_file = argv[i + 1];
+			TGAFile target = TGAFile::from_path(target_file);
+			tracking_image = tracking_image.screen(target);
+			if (!has_operation) has_operation = true;
+			i += 1;
+		} else if (!strcmp(argv[i], "combine")) {
+			if (!is_valid_combined_arguments(i, argc, argv)) return;
+			std::string target_file_1 = argv[i + 1];
+			std::string target_file_2 = argv[i + 2];
+			TGAFile target_1 = TGAFile::from_path(target_file_1);
+			TGAFile target_2 = TGAFile::from_path(target_file_2);
+			tracking_image = TGAFile::from_files(tracking_image, target_1, target_2);
+			if (!has_operation) has_operation = true;
+			i += 2;
+		} else if (!strcmp(argv[i], "flip")) {
+			tracking_image = tracking_image.flip();
+			if (!has_operation) has_operation = true;
+		} else if (!strcmp(argv[i], "onlyred")) {
+			tracking_image = tracking_image.onlyred();
+			if (!has_operation) has_operation = true;
+		} else if (!strcmp(argv[i], "onlygreen")) {
+			tracking_image = tracking_image.onlygreen();
+			if (!has_operation) has_operation = true;
+		} else if (!strcmp(argv[i], "onlyblue")) {
+			tracking_image = tracking_image.onlyblue();
+			if (!has_operation) has_operation = true;
+		} else if (!strcmp(argv[i], "addred")) {
+			if (!is_valid_argument(i, argc, argv, false)) return;
+			int n = std::stoi(argv[i + 1]);
+			u8 amount = static_cast<u8>(std::abs(n));
+			if (n < 0) {
+				tracking_image = tracking_image.subtract(0, 0, amount);
 			} else {
-				tracking_image = 
+				tracking_image = tracking_image.add(0, 0, amount);
 			}
+			if (!has_operation) has_operation = true;
+			i += 1;
+		} else if (!strcmp(argv[i], "addgreen")) {
+			if (!is_valid_argument(i, argc, argv, false)) return;
+			int n = std::stoi(argv[i + 1]);
+			u8 amount = static_cast<u8>(std::abs(n));
+			if (n < 0) {
+				tracking_image = tracking_image.subtract(0, amount, 0);
+			} else {
+				tracking_image = tracking_image.add(0, amount, 0);
+			}
+			if (!has_operation) has_operation = true;
+			i += 1;
+		} else if (!strcmp(argv[i], "addblue")) {
+			if (!is_valid_argument(i, argc, argv, false)) return;
+			int n = std::stoi(argv[i + 1]);
+			u8 amount = static_cast<u8>(std::abs(n));
+			if (n < 0) {
+				tracking_image = tracking_image.subtract(amount, 0, 0);
+			} else {
+				tracking_image = tracking_image.add(amount, 0, 0);
+			}
+			if (!has_operation) has_operation = true;
+			i += 1;
+		} else if (!strcmp(argv[i], "scalered")) {
+			if (!is_valid_argument(i, argc, argv, false)) return;
+			int n = std::stoi(argv[i + 1]);
+			u8 amount = static_cast<u8>(n);
+			tracking_image = tracking_image.scale_red(amount);
+			if (!has_operation) has_operation = true;
+			i += 1;
+		} else if (!strcmp(argv[i], "scalegreen")) {
+			if (!is_valid_argument(i, argc, argv, false)) return;
+			int n = std::stoi(argv[i + 1]);
+			u8 amount = static_cast<u8>(n);
+			tracking_image = tracking_image.scale_green(amount);
+			if (!has_operation) has_operation = true;
+			i += 1;
+		} else if (!strcmp(argv[i], "scaleblue")) {
+			if (!is_valid_argument(i, argc, argv, false)) return;
+			int n = std::stoi(argv[i + 1]);
+			u8 amount = static_cast<u8>(n);
+			tracking_image = tracking_image.scale_blue(amount);
+			if (!has_operation) has_operation = true;
+			i += 1;
+		} else {
+			break;
 		}
+	}
+	if (has_operation) {
+		tracking_image.write_to_path(output_file_name);
+	} else {
+		std::cout << "Invalid method name." << '\n';
 	}
 }
 
 int main(int argc, char* argv[]) {
-	parse_cli(argc, argv);
+	if (argc > 1) parse_cli(argc, argv);
+	else print_help();
 //	test_1();
 //	test_2();
 //	test_3();
