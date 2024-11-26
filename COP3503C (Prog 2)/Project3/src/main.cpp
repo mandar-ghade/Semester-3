@@ -1,3 +1,4 @@
+#include "board.h"
 #include "config.h"
 #include <cctype>
 #include <iostream>
@@ -33,7 +34,7 @@ sf::Text new_text_object(sf::Font& font,
 	return text_obj;
 }
 
-void run_game_window(Config& cfg);
+void run_game_window(Config& cfg, std::string& name);
 
 void run_welcome_window(Config& cfg) {
 	const float width = (float)cfg.columns * 32;
@@ -75,7 +76,7 @@ void run_welcome_window(Config& cfg) {
 				has_entered_name = true;
 				window.close();
 			} else if (event.type == sf::Event::TextEntered) {
-				if (event.text.unicode >= 128) {
+				if (event.text.unicode >= 128) { // if it isn't letter input
 					continue;
 				} else if (
 					std::isalpha(static_cast<char>(event.text.unicode)) && user_typed_str.size() < 10
@@ -110,14 +111,16 @@ void run_welcome_window(Config& cfg) {
 		window.display();
 	}
 	if (has_entered_name) {
-		run_game_window(cfg);
+		run_game_window(cfg, user_typed_str);
 	}
 }
 
-void run_game_window(Config& cfg) {
+void run_game_window(Config& cfg, std::string& name) {
 	const float width = (float)cfg.columns * 32;
 	const float height = (float)cfg.rows * 32 + 100;
 	sf::RenderWindow window(sf::VideoMode((int)width, (int)height), "Game Window", sf::Style::Close);
+	Board board(cfg);
+	board.print_as_str();
 	sf::RectangleShape rect;
 	rect.setSize(sf::Vector2f(width, height));
 	rect.setFillColor(sf::Color::White);
