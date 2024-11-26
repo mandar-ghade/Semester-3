@@ -1,6 +1,9 @@
 #pragma once
+#include <cstdlib>
+#include <iostream>
 #include <map>
 #include <vector>
+#include <random>
 #include "config.h"
 #include "tile.h"
 
@@ -12,15 +15,6 @@ private:
 	const size_t mine_count;
 	std::vector<std::vector<Tile*>> tiles;
 	std::vector<Tile*> mines;
-public:
-	Board(Config& cfg): 
-		rows(cfg.rows),
-		columns(cfg.columns),
-		mine_count(cfg.mines)
-	{
-		generate_board();
-	}
-
 	void generate_board() {
 		for (size_t i = 0; i < this->rows; i++) {
 			tiles.push_back(std::vector<Tile*>());
@@ -31,6 +25,7 @@ public:
 			}
 		}
 		this->assign_neighboring_tiles();
+		this->plant_mines();
 	}
 
 	void assign_neighboring_tiles() {
@@ -40,9 +35,30 @@ public:
 			}
 		}
 	}
-
-	Tile::AdjacentTiles get_neighboring(Tile* tile) {
-		return tile->get_neighbors();
+	void plant_mines() {
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		std::uniform_int_distribution<> row_dist(0, static_cast<int>(this->rows) - 1);
+		std::uniform_int_distribution<> col_dist(0, static_cast<int>(this->columns) - 1);
+		for (size_t i = 0; i < this->mine_count; i++) {
+			int row = row_dist(gen);
+			int col = col_dist(gen);
+			while (this->tiles[row][col]->has_mine()) {
+				row = row_dist(gen);
+				col = col_dist(gen);
+			}
+			this->tiles[row][col]->plant_mine();
+			this->mines.push_back(this->tiles[row][col]);
+			this->tiles[row][col]->incr_adj_mine_counts();
+		}
+	}
+public:
+	Board(Config& cfg): 
+		rows(cfg.rows),
+		columns(cfg.columns),
+		mine_count(cfg.mines)
+	{
+		generate_board();
 	}
 
 	void print_as_str() {
@@ -66,7 +82,6 @@ public:
 		}
 		std::cout << "\t}\n"; 
 		std::cout << "}\n";
-		//std::cout << "\tmines = " << this->mine_count << ",\n}\n";
 	}
 
 	~Board() {

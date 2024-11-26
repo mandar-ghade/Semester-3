@@ -2,20 +2,6 @@
 #include <iostream>
 #include <vector>
 
-enum MINE_DISTANCE {
-	NONE, // not applicable, or has a bomb.
-	ONE_AWAY,
-	TWO_AWAY,
-	THREE_AWAY,
-	FOUR_AWAY,
-	FIVE_AWAY,
-	SIX_AWAY,
-	SEVEN_AWAY,
-	EIGHT_AWAY,
-};
-
-MINE_DISTANCE mine_distance_as_literal(int distance); 
-
 enum TILE_STATE {
 	HIDDEN,
 	REVEALED,
@@ -32,7 +18,7 @@ struct Mine {
 class Tile {
 private:
 	Mine* mine = nullptr;
-	MINE_DISTANCE mine_distance;
+	int adjacent_mines = 0;
 	TILE_STATE current_state;
 	bool flagged = false;
 public:
@@ -45,26 +31,51 @@ public:
 	Tile(int x, int y, Mine* mine):
 		// only use if initializing as mine.
 		mine(mine),
-		mine_distance(MINE_DISTANCE::NONE),
+		adjacent_mines(0),
 		current_state(TILE_STATE::HIDDEN),
 		x(x), y(y), 
 		tiles( AdjacentTiles { .adjacent = {} } )
 	{};
 	Tile(int x, int y):
 		mine(nullptr),
-		mine_distance(MINE_DISTANCE::NONE),
+		adjacent_mines(0),
 		current_state(TILE_STATE::HIDDEN),
 		x(x), y(y),
 		tiles( AdjacentTiles { .adjacent = {} } )
 	{};
 
 	std::string as_str() {
-		std::string output_msg = "Tile { x = " + std::to_string(x) + ", y = " + std::to_string(y) + " }";
+		std::string has_a_mine = this->has_mine() ? "true" : "false";
+		std::string output_msg = "Tile { x = " 
+			+ std::to_string(this->x) + ", y = " 
+			+ std::to_string(y) + ", has_mine = " + has_a_mine + ", adjacent_mines = " 
+			+ std::to_string(this->adjacent_mines) + " }";
 		return output_msg;
 	}
 
 	void plant_mine() {
-		mine = new Mine(this->x, this->y);
+		this->mine = new Mine(this->x, this->y);
+	}
+
+	void incr_adj_mine_counts() {
+		// assumes current tile has a mine.
+
+		if (!this->has_mine()) {
+			throw std::runtime_error("Cannot increment adjacent mine counts if starting Tile is not a mine!");
+		}
+
+		for (size_t i = 0; i < 8; i++) {
+			if (this->tiles.adjacent[i] != nullptr) {
+				if (!this->tiles.adjacent[i]->has_mine()) {
+					this->tiles.adjacent[i]->adjacent_mines++;
+				}
+			}
+		}
+	}
+
+	void reveal_tile() {
+		// use this when revealing tiles without mines
+		this->current_state = TILE_STATE::REVEALED;
 	}
 
 	bool has_mine() const {
@@ -73,7 +84,7 @@ public:
 
 	bool has_detonated() const {
 		if (!this->has_mine()) {
-			throw std::runtime_error("Mine does not exist on this Tile. Cannot debug its detonation");
+			throw std::runtime_error("Mine does not exist on this Tile. Cannot detonate.");
 		}
 		return this->mine->has_detonated;
 	}
@@ -82,11 +93,8 @@ public:
 		return this->current_state;
 	}
 
-	MINE_DISTANCE get_mine_distance() const {
-		if (this->has_mine()) {
-			throw std::runtime_error("This tile has a mine! Cannot compute mine distance.");
-		}
-		return this->mine_distance;
+	int get_adjacent_mines() const {
+		return this->adjacent_mines;
 	}
 
 	bool get_is_flagged() const {
@@ -121,7 +129,7 @@ public:
 		size_t col_start, col_end;
 		size_t row_start, row_end;
 		col_start = std::max(static_cast<int>(col) - 1, 0);
-		col_end = std::min(static_cast<int>(col) + 2, static_cast<int>(max_cols)); // +2 because not included i  for loop
+		col_end = std::min(static_cast<int>(col) + 2, static_cast<int>(max_cols)); // for loop bounds
 		row_start = std::max(static_cast<int>(row) - 1, 0);
 		row_end = std::min(static_cast<int>(row) + 2, static_cast<int>(max_rows));
 		size_t count = 0;
