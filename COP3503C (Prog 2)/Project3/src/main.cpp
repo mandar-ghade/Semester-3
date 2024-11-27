@@ -13,7 +13,7 @@ void center_text(sf::Text &text, float x, float y) {
 	text.setPosition(sf::Vector2f(x, y));
 }
 
-sf::Text new_text_object(sf::Font& font,
+sf::Text new_text_object(const sf::Font& font,
 						 std::string text,
 						 bool bold,
 						 bool underlined,
@@ -70,12 +70,13 @@ void run_welcome_window(Config& cfg) {
 			if (event.type == sf::Event::Closed) {
 				window.close();
 			} else if (
-				sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && 
+				event.type == sf::Event::KeyPressed &&
+				event.key.code == sf::Keyboard::Enter &&
 				!user_typed_str.empty()
 			) {
 				has_entered_name = true;
 				window.close();
-			} else if (event.type == sf::Event::TextEntered) {
+			} if (event.type == sf::Event::TextEntered) {
 				if (event.text.unicode >= 128) { // if it isn't letter input
 					continue;
 				} else if (
@@ -110,6 +111,7 @@ void run_welcome_window(Config& cfg) {
 		window.draw(dynamic_text_obj);
 		window.display();
 	}
+	window.close();
 	if (has_entered_name) {
 		run_game_window(cfg, user_typed_str);
 	}
@@ -120,7 +122,15 @@ void run_game_window(Config& cfg, std::string& name) {
 	const float height = (float)cfg.rows * 32 + 100;
 	sf::RenderWindow window(sf::VideoMode((int)width, (int)height), "Game Window", sf::Style::Close);
 	Board board(cfg);
-	board.print_as_str();
+	sf::Sprite reset_button;
+	reset_button.setTexture(cfg.textures.face_happy);
+	reset_button.setPosition(
+		sf::Vector2f(((float)cfg.columns / 2.0f * 32) - 32, 
+			    32 * ((float)cfg.rows + 0.5f)
+		)
+	);
+	//tile1_sprite.setTexture(cfg.textures.hidden_tile);
+	//board.print_as_str();
 	sf::RectangleShape rect;
 	rect.setSize(sf::Vector2f(width, height));
 	rect.setFillColor(sf::Color::White);
@@ -130,9 +140,22 @@ void run_game_window(Config& cfg, std::string& name) {
 			if (event.type == sf::Event::Closed) {
 				window.close();
 			}
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				if (reset_button.getGlobalBounds()
+					.contains(
+						(float)event.mouseButton.x,
+						(float)event.mouseButton.y
+					)
+				) {
+					board.reset();
+				}
+			} 
 			window.clear();
 			window.draw(rect);
+			window.draw(reset_button);
+			board.draw_sprites(window);
 			window.display();
+			//board.reset();
 		}
 	}
 }

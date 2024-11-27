@@ -1,5 +1,4 @@
 #pragma once
-#include "config.h"
 #include <iostream>
 #include <vector>
 
@@ -22,8 +21,7 @@ private:
 	int adjacent_mines = 0;
 	TILE_STATE current_state;
 	bool flagged = false;
-	Config& cfg;
-	sf::Sprite sprite;
+	sf::Texture texture;
 public:
 	const int x;
 	const int y;
@@ -31,23 +29,21 @@ public:
 		Tile* adjacent[8];
 	};
 	AdjacentTiles tiles;
-	Tile(int x, int y, int total_rows, Config& cfg):
+	Tile(int x, int y, Mine* mine):
+		// only use if initializing as mine.
+		mine(mine),
+		adjacent_mines(0),
+		current_state(TILE_STATE::HIDDEN),
+		x(x), y(y), 
+		tiles( AdjacentTiles { .adjacent = {} } )
+	{};
+	Tile(int x, int y):
 		mine(nullptr),
 		adjacent_mines(0),
 		current_state(TILE_STATE::HIDDEN),
-		cfg(cfg),
 		x(x), y(y),
 		tiles( AdjacentTiles { .adjacent = {} } )
-	{
-		sprite.setTexture(cfg.textures.hidden_tile);
-		sprite.setPosition(
-			sf::Vector2f((float)x * 32, ((float)total_rows - (float)y - 1) * 32)
-		);
-	};
-
-	sf::Sprite& get_sprite() {
-		return this->sprite;
-	}
+	{};
 
 	std::string as_str() const {
 		std::string has_a_mine = this->has_mine() ? "true" : "false";
@@ -60,31 +56,6 @@ public:
 
 	void plant_mine() {
 		this->mine = new Mine(this->x, this->y);
-		this->sprite.setTexture(this->cfg.textures.mine);
-	}
-
-	void set_matching_texture() {
-		if (this->has_mine()) {
-			this->sprite.setTexture(this->cfg.textures.mine);
-			return;
-		}
-		if (this->adjacent_mines == 1) {
-			this->sprite.setTexture(this->cfg.textures.number_1);
-		} else if (this->adjacent_mines == 2) {
-			this->sprite.setTexture(this->cfg.textures.number_2);
-		} else if (this->adjacent_mines == 3) {
-			this->sprite.setTexture(this->cfg.textures.number_3);
-		} else if (this->adjacent_mines == 4) {
-			this->sprite.setTexture(this->cfg.textures.number_4);
-		} else if (this->adjacent_mines == 5) {
-			this->sprite.setTexture(this->cfg.textures.number_5);
-		} else if (this->adjacent_mines == 6) {
-			this->sprite.setTexture(this->cfg.textures.number_6);
-		} else if (this->adjacent_mines == 7) {
-			this->sprite.setTexture(this->cfg.textures.number_7);
-		} else if (this->adjacent_mines == 8) {
-			this->sprite.setTexture(this->cfg.textures.number_8);
-		} 
 	}
 
 	void incr_adj_mine_counts() const {
@@ -98,7 +69,6 @@ public:
 			if (this->tiles.adjacent[i] != nullptr) {
 				if (!this->tiles.adjacent[i]->has_mine()) {
 					this->tiles.adjacent[i]->adjacent_mines++;
-					this->tiles.adjacent[i]->set_matching_texture();
 				}
 			}
 		}

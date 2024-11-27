@@ -13,6 +13,7 @@ private:
 	const size_t rows;
 	const size_t columns;
 	const size_t mine_count;
+	Config& cfg;
 	std::vector<std::vector<Tile*>> tiles;
 	std::vector<Tile*> mines;
 	void generate_board() {
@@ -20,7 +21,7 @@ private:
 			tiles.push_back(std::vector<Tile*>());
 			for (size_t j = 0; j < this->columns; j++) {
 				tiles.at(i).push_back(
-					new Tile((int)j, (int)i)
+					new Tile((int)j, (int)i, (int)this->rows, this->cfg)
 				);
 			}
 		}
@@ -56,11 +57,28 @@ public:
 	Board(Config& cfg): 
 		rows(cfg.rows),
 		columns(cfg.columns),
-		mine_count(cfg.mines)
+		mine_count(cfg.mines),
+		cfg(cfg)
 	{
 		generate_board();
 	}
-
+	void reset() {
+		this->mines.clear();
+		for (auto row = tiles.begin(); row != tiles.end(); row++) {
+			for (auto col = row->begin(); col != row->end(); col++) {
+				delete (*col);
+			}
+		}
+		this->tiles.clear();
+		generate_board();
+	}
+	void draw_sprites(sf::RenderWindow& window) {
+		for (auto row = tiles.begin(); row != tiles.end(); row++) {
+			for (auto col = row->begin(); col != row->end(); col++) {
+				window.draw((*col)->get_sprite());
+			}
+		}
+	}
 	void print_as_str() {
 		std::cout << "Board {" << '\n';
 		std::cout << "\trows = " << this->rows << ',' << '\n';
