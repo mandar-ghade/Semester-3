@@ -1,6 +1,10 @@
 #include "tile.h"
 
 
+sf::RectangleShape& Tile::get_background() {
+	return this->background;
+}
+
 sf::Sprite& Tile::get_sprite() {
 	return this->sprite;
 }
@@ -15,32 +19,33 @@ std::string Tile::as_str() const {
 }
 
 void Tile::plant_mine() {
-	this->mine = new Mine(this->x, this->y);
-	//this->sprite.setTexture(this->cfg.textures.mine);
+	this->contains_mine = true;
+	//this->sprite.setTexture(this->cfg->textures.mine);
 }
 
 void Tile::set_matching_texture() {
 	if (this->has_mine()) {
-		this->sprite.setTexture(this->cfg.textures.mine);
-		return;
-	}
-	if (this->adjacent_mines == 1) {
-		this->sprite.setTexture(this->cfg.textures.number_1);
+		this->sprite.setTexture(this->cfg->textures.mine);
+	} else if (this->adjacent_mines == 1) {
+		this->sprite.setTexture(this->cfg->textures.number_1);
 	} else if (this->adjacent_mines == 2) {
-		this->sprite.setTexture(this->cfg.textures.number_2);
+		this->sprite.setTexture(this->cfg->textures.number_2);
 	} else if (this->adjacent_mines == 3) {
-		this->sprite.setTexture(this->cfg.textures.number_3);
+		this->sprite.setTexture(this->cfg->textures.number_3);
 	} else if (this->adjacent_mines == 4) {
-		this->sprite.setTexture(this->cfg.textures.number_4);
+		this->sprite.setTexture(this->cfg->textures.number_4);
 	} else if (this->adjacent_mines == 5) {
-		this->sprite.setTexture(this->cfg.textures.number_5);
+		this->sprite.setTexture(this->cfg->textures.number_5);
 	} else if (this->adjacent_mines == 6) {
-		this->sprite.setTexture(this->cfg.textures.number_6);
+		this->sprite.setTexture(this->cfg->textures.number_6);
 	} else if (this->adjacent_mines == 7) {
-		this->sprite.setTexture(this->cfg.textures.number_7);
+		this->sprite.setTexture(this->cfg->textures.number_7);
 	} else if (this->adjacent_mines == 8) {
-		this->sprite.setTexture(this->cfg.textures.number_8);
-	} 
+		this->sprite.setTexture(this->cfg->textures.number_8);
+	} else {
+		this->sprite.setTexture(this->cfg->textures.tile_revealed);
+	}
+	this->background.setTexture(&this->cfg->textures.tile_revealed);
 }
 
 void Tile::incr_adj_mine_counts() const {
@@ -54,7 +59,18 @@ void Tile::incr_adj_mine_counts() const {
 		if (this->tiles.adjacent[i] != nullptr) {
 			if (!this->tiles.adjacent[i]->has_mine()) {
 				this->tiles.adjacent[i]->adjacent_mines++;
-				//this->tiles.adjacent[i]->set_matching_texture();
+			}
+		}
+	}
+}
+
+void Tile::reveal_adjacent_tiles() {
+	for (size_t i = 0; i < 8; i++) {
+		if (this->tiles.adjacent[i] != nullptr) {
+			if (!this->tiles.adjacent[i]->has_mine() &&
+				 this->tiles.adjacent[i]->get_is_hidden()
+			) {
+				this->tiles.adjacent[i]->reveal_tile();
 			}
 		}
 	}
@@ -62,25 +78,26 @@ void Tile::incr_adj_mine_counts() const {
 
 void Tile::reveal_tile() {
 	// use this when revealing tiles without mines
-	if (this->has_mine()) {
-		throw std::runtime_error("Attempted to reveal a mine-containing tile. Use detonate() instead.");
+	this->is_hidden = false;
+	this->set_matching_texture();
+	if (!this->has_mine() && this->adjacent_mines == 0) {
+		this->reveal_adjacent_tiles();
 	}
-	this->current_state = TILE_STATE::REVEALED;
 }
 
 bool Tile::has_mine() const {
-	return mine != nullptr;
+	return this->contains_mine;
 };
 
 bool Tile::has_detonated() const {
 	if (!this->has_mine()) {
-		throw std::runtime_error("Mine does not exist on this Tile. Cannot detonate.");
+		throw std::runtime_error("Cannot check detonation state on non-mine.");
 	}
-	return this->mine->has_detonated;
+	return this->has_mine() && this->is_hidden == false;
 }
 
-TILE_STATE Tile::get_state() const {
-	return this->current_state;
+bool Tile::get_is_hidden() const {
+	return this->is_hidden;
 }
 
 int Tile::get_adjacent_mines() const {
@@ -92,18 +109,11 @@ bool Tile::get_is_flagged() const {
 }
 
 void Tile::set_flag_state(bool is_flagged) {
-	if (this->current_state == TILE_STATE::REVEALED) {
+	if (!this->is_hidden) {
 		throw std::runtime_error("Cannot flag a tile that has already been revealed!");
 	}
 	this->flagged = is_flagged;
-}
-
-void Tile::detonate_mine() {
-	if (!this->has_mine()) {
-		throw std::runtime_error("Mine does not exist! Cannot detonate");
-	}
-	this->mine->has_detonated = true;
-	this->current_state = TILE_STATE::REVEALED;
+	// note: cannot have a flagged & revealed tile.
 }
 
 void Tile::assign_neighboring_tiles(

@@ -1,3 +1,4 @@
+#include "game.h"
 #include "board.h"
 #include "config.h"
 #include <cctype>
@@ -121,16 +122,7 @@ void run_game_window(Config& cfg, std::string& name) {
 	const float width = (float)cfg.columns * 32;
 	const float height = (float)cfg.rows * 32 + 100;
 	sf::RenderWindow window(sf::VideoMode((int)width, (int)height), "Game Window", sf::Style::Close);
-	Board board(cfg);
-	sf::Sprite reset_button;
-	reset_button.setTexture(cfg.textures.face_happy);
-	reset_button.setPosition(
-		sf::Vector2f(((float)cfg.columns / 2.0f * 32) - 32, 
-			    32 * ((float)cfg.rows + 0.5f)
-		)
-	);
-	//tile1_sprite.setTexture(cfg.textures.hidden_tile);
-	//board.print_as_str();
+	Game game(&cfg);
 	sf::RectangleShape rect;
 	rect.setSize(sf::Vector2f(width, height));
 	rect.setFillColor(sf::Color::White);
@@ -141,19 +133,12 @@ void run_game_window(Config& cfg, std::string& name) {
 				window.close();
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-				if (reset_button.getGlobalBounds()
-					.contains(
-						(float)event.mouseButton.x,
-						(float)event.mouseButton.y
-					)
-				) {
-					board.reset();
-				}
-			} 
+				sf::Vector2i pos = sf::Mouse::getPosition(window);
+				game.handle_left_click(pos);
+			}
 			window.clear();
 			window.draw(rect);
-			window.draw(reset_button);
-			board.draw_sprites(window);
+			game.draw(window);
 			window.display();
 			//board.reset();
 		}

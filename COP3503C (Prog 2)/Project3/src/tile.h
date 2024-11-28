@@ -3,26 +3,14 @@
 #include <iostream>
 #include <vector>
 
-enum TILE_STATE {
-	HIDDEN,
-	REVEALED,
-};
-
-struct Mine {
-	int x;
-	int y;
-	bool has_detonated;
-	Mine(int x, int y): x(x), y(y), has_detonated(false) {};
-};
-
-
 class Tile {
 private:
-	Mine* mine = nullptr;
 	int adjacent_mines = 0;
-	TILE_STATE current_state;
+	bool contains_mine = false;
+	bool is_hidden = true;
 	bool flagged = false;
-	Config& cfg;
+	Config* cfg;
+	sf::RectangleShape background;
 	sf::Sprite sprite;
 public:
 	const int x;
@@ -31,39 +19,37 @@ public:
 		Tile* adjacent[8];
 	};
 	AdjacentTiles tiles;
-	Tile(int x, int y, int total_rows, Config& cfg):
-		mine(nullptr),
+	Tile(int x, int y, int total_rows, Config* cfg):
 		adjacent_mines(0),
-		current_state(TILE_STATE::HIDDEN),
 		cfg(cfg),
 		x(x), y(y),
 		tiles( AdjacentTiles { .adjacent = {} } )
 	{
-		sprite.setTexture(cfg.textures.hidden_tile);
+		background.setSize(sf::Vector2f(32, 32));
+		background.setTexture(&this->cfg->textures.hidden_tile);
+		background.setPosition(
+			sf::Vector2f((float)x * 32, ((float)total_rows - (float)y - 1) * 32)
+		);
+		sprite.setTexture(cfg->textures.hidden_tile);
 		sprite.setPosition(
 			sf::Vector2f((float)x * 32, ((float)total_rows - (float)y - 1) * 32)
 		);
 	};
-
+	sf::RectangleShape& get_background(); 
 	sf::Sprite& get_sprite(); 
 	std::string as_str() const; 
 	void plant_mine(); 
 	void set_matching_texture(); 
 	void incr_adj_mine_counts() const; 
+	void reveal_adjacent_tiles();
 	void reveal_tile(); 
 	bool has_mine() const;
 	bool has_detonated() const; 
-	TILE_STATE get_state() const; 
+	bool get_is_hidden() const; 
 	int get_adjacent_mines() const; 
 	bool get_is_flagged() const; 
 	void set_flag_state(bool is_flagged); 
-	void detonate_mine(); 
 	void assign_neighboring_tiles(const std::vector<std::vector<Tile*>>& board); 
 	AdjacentTiles get_neighbors() const; 
-	~Tile() {
-		if (this->mine != nullptr) {
-			delete mine;
-		}
-	}
 };
 

@@ -54,7 +54,6 @@ void Board::reset() {
 void Board::draw_sprites(sf::RenderWindow& window) {
 	for (auto row = tiles.begin(); row != tiles.end(); row++) {
 		for (auto col = row->begin(); col != row->end(); col++) {
-			window.draw((*col)->get_background());
 			window.draw((*col)->get_sprite());
 		}
 	}
@@ -83,16 +82,11 @@ void Board::print_as_str() {
 	std::cout << "}\n";
 }
 
-Tile* Board::get_clicked_tile(const sf::Vector2i& rect) const {
+Tile* Board::get_clicked_tile(const sf::Vector2i& rect) {
 	for (auto row = tiles.begin(); row != tiles.end(); row++) {
 		for (auto col = row->begin(); col != row->end(); col++) {
-			if ((*col)->get_sprite()
-				.getGlobalBounds()
-				.contains((float)rect.x,
-						  (float)rect.y)) {
-				return *col;
-			}
+			if ((*col)->get_sprite().getGlobalBounds())
+			//window.draw((*col)->get_sprite());
 		}
 	}
-	return nullptr;
 }
