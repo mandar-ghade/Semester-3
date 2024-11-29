@@ -1,13 +1,14 @@
 #pragma once
 #include <iostream>
 #include <random>
+#include <vector>
 #include "config.h"
 #include "tile.h"
 
 class Board {
 private:
 	Config* cfg;
-	std::vector<std::vector<Tile*>> tiles;
+	std::vector<std::vector<Tile>> tiles;
 	void generate_board(); 
 	void assign_neighboring_tiles();
 	void plant_mines(); 
@@ -17,8 +18,10 @@ public:
 	{
 		generate_board();
 	}
-	Tile* get_clicked_tile(const sf::Vector2i& mouse) const;
+	Tile* get_clicked_tile(const sf::Vector2i& mouse);
 	void reset(); 
-	void draw_sprites(sf::RenderWindow& window); 
+	void draw_sprites(sf::RenderWindow* window); 
 	void print_as_str(); 
+	int count_hidden_tiles();
+	std::vector<Tile*> get_mines();
 };

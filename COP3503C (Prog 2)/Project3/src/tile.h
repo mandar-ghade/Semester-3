@@ -12,6 +12,7 @@ private:
 	Config* cfg;
 	sf::RectangleShape background;
 	sf::Sprite sprite;
+	sf::RectangleShape top_layer;
 public:
 	const int x;
 	const int y;
@@ -34,7 +35,12 @@ public:
 		sprite.setPosition(
 			sf::Vector2f((float)x * 32, ((float)total_rows - (float)y - 1) * 32)
 		);
+		top_layer.setSize(sf::Vector2f(32, 32));
+		top_layer.setPosition(
+			sf::Vector2f((float)x * 32, ((float)total_rows - (float)y - 1) * 32)
+		);
 	};
+	sf::RectangleShape& get_top_layer(); 
 	sf::RectangleShape& get_background(); 
 	sf::Sprite& get_sprite(); 
 	std::string as_str() const; 
@@ -49,7 +55,7 @@ public:
 	int get_adjacent_mines() const; 
 	bool get_is_flagged() const; 
 	void set_flag_state(bool is_flagged); 
-	void assign_neighboring_tiles(const std::vector<std::vector<Tile*>>& board); 
+	void assign_neighboring_tiles(std::vector<std::vector<Tile>>& board); 
 	AdjacentTiles get_neighbors() const; 
 };
 

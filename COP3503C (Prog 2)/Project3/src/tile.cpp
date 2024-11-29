@@ -1,5 +1,8 @@
 #include "tile.h"
 
+sf::RectangleShape& Tile::get_top_layer() {
+	return this->top_layer;
+}
 
 sf::RectangleShape& Tile::get_background() {
 	return this->background;
@@ -117,7 +120,7 @@ void Tile::set_flag_state(bool is_flagged) {
 }
 
 void Tile::assign_neighboring_tiles(
-	const std::vector<std::vector<Tile*>>& board
+	std::vector<std::vector<Tile>>& board
 ) {
 	size_t max_rows = board.size();
 	if (max_rows == 0) {
@@ -138,7 +141,7 @@ void Tile::assign_neighboring_tiles(
 			if (c == col && r == row) {
 				continue;
 			}
-			this->tiles.adjacent[count++] = board.at(r).at(c);
+			this->tiles.adjacent[count++] = &board.at(r).at(c);
 		}
 	}
 }

@@ -10,10 +10,10 @@
 
 void Board::generate_board() {
 	for (size_t i = 0; i < (size_t)this->cfg->rows; i++) {
-		tiles.push_back(std::vector<Tile*>());
+		tiles.push_back(std::vector<Tile>());
 		for (size_t j = 0; j < (size_t)this->cfg->columns; j++) {
 			tiles.at(i).push_back(
-				new Tile((int)j, (int)i, this->cfg->rows, this->cfg)
+				Tile((int)j, (int)i, this->cfg->rows, this->cfg)
 			);
 		}
 	}
@@ -24,7 +24,7 @@ void Board::generate_board() {
 void Board::assign_neighboring_tiles() {
 	for (auto row = tiles.begin(); row != tiles.end(); row++) {
 		for (auto col = row->begin(); col != row->end(); col++) {
-			(*col)->assign_neighboring_tiles(tiles);
+			col->assign_neighboring_tiles(tiles);
 		}
 	}
 }
@@ -37,12 +37,12 @@ void Board::plant_mines() {
 	for (size_t i = 0; i < (size_t)this->cfg->mines; i++) {
 		int row = row_dist(gen);
 		int col = col_dist(gen);
-		while (this->tiles[row][col]->has_mine()) {
+		while (this->tiles[row][col].has_mine()) {
 			row = row_dist(gen);
 			col = col_dist(gen);
 		}
-		this->tiles[row][col]->plant_mine();
-		this->tiles[row][col]->incr_adj_mine_counts();
+		this->tiles[row][col].plant_mine();
+		this->tiles[row][col].incr_adj_mine_counts();
 	}
 }
 
@@ -51,11 +51,11 @@ void Board::reset() {
 	generate_board();
 }
 
-void Board::draw_sprites(sf::RenderWindow& window) {
+void Board::draw_sprites(sf::RenderWindow* window) {
 	for (auto row = tiles.begin(); row != tiles.end(); row++) {
 		for (auto col = row->begin(); col != row->end(); col++) {
-			window.draw((*col)->get_background());
-			window.draw((*col)->get_sprite());
+			window->draw(col->get_background());
+			window->draw(col->get_sprite());
 		}
 	}
 }
@@ -68,9 +68,9 @@ void Board::print_as_str() {
 	std::cout << "\tboard = " << "{" << '\n';
 	for (auto row = tiles.begin(); row != tiles.end(); row++) {
 		for (auto col = row->begin(); col != row->end(); col++) {
-			std::cout << "\t\t" << (*col)->as_str() << ',' << '\n';
+			std::cout << "\t\t" << col->as_str() << ',' << '\n';
 			std::cout << "\t\t\tneighbors = {" << '\n';
-			Tile::AdjacentTiles neighbors = (*col)->get_neighbors();
+			Tile::AdjacentTiles neighbors = col->get_neighbors();
 			for (size_t i = 0; i < 8; i++) {
 				if (neighbors.adjacent[i] != nullptr) {
 					std::cout << "\t\t\t\t" << neighbors.adjacent[i]->as_str() << '\n';
@@ -83,16 +83,39 @@ void Board::print_as_str() {
 	std::cout << "}\n";
 }
 
-Tile* Board::get_clicked_tile(const sf::Vector2i& rect) const {
+Tile* Board::get_clicked_tile(const sf::Vector2i& rect) {
 	for (auto row = tiles.begin(); row != tiles.end(); row++) {
 		for (auto col = row->begin(); col != row->end(); col++) {
-			if ((*col)->get_sprite()
+			if (col->get_sprite()
 				.getGlobalBounds()
 				.contains((float)rect.x,
 						  (float)rect.y)) {
-				return *col;
+				return &*col;
 			}
 		}
 	}
 	return nullptr;
 }
+
+int Board::count_hidden_tiles() {
+	int count = 0;
+	for (auto row = this->tiles.begin(); row != this->tiles.end(); row++) {
+		for (auto col = row->begin(); col != row->end(); col++) {
+			if (col->get_is_hidden()) count++;
+		}
+	}
+	return count;
+}
+
+std::vector<Tile*> Board::get_mines() {
+	std::vector<Tile*> mines;
+	for (auto row = this->tiles.begin(); row != this->tiles.end(); row++) {
+		for (auto col = row->begin(); col != row->end(); col++) {
+			if (col->has_mine()) {
+				mines.push_back(&*col);
+			}
+		}
+	}
+	return mines;
+}
+

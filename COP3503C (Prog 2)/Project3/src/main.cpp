@@ -122,7 +122,7 @@ void run_game_window(Config& cfg, std::string& name) {
 	const float width = (float)cfg.columns * 32;
 	const float height = (float)cfg.rows * 32 + 100;
 	sf::RenderWindow window(sf::VideoMode((int)width, (int)height), "Game Window", sf::Style::Close);
-	Game game(&cfg);
+	Game game(&cfg, &window);
 	sf::RectangleShape rect;
 	rect.setSize(sf::Vector2f(width, height));
 	rect.setFillColor(sf::Color::White);
@@ -138,7 +138,7 @@ void run_game_window(Config& cfg, std::string& name) {
 			}
 			window.clear();
 			window.draw(rect);
-			game.draw(window);
+			game.draw();
 			window.display();
 			//board.reset();
 		}
