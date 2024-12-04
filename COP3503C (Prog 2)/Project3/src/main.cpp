@@ -140,7 +140,6 @@ void run_game_window(Config& cfg, std::string& name) {
 			window.draw(rect);
 			game.draw();
 			window.display();
-			//board.reset();
 		}
 	}
 }

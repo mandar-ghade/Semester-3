@@ -149,6 +149,9 @@ private:
 				initialize_sprites(cfg);
 			}
 			void initialize_sprites(const Config* cfg) {
+				
+			}
+			void draw(sf::RenderWindow* _window) {
 
 			}
 			bool handle_click(sf::Vector2i& mouse_coords) {
@@ -169,8 +172,9 @@ public:
 		ui_elements(cfg)
 	{};
 	void draw() {
-		board.draw_sprites(this->window, this->debug_mode);
+		board.draw_sprites(this->window, this->debug_mode, this->state == GAME_STATE::PAUSED);
 		buttons.draw(this->window);
+		ui_elements.draw(this->window);
 	}
 	void clear() {
 		this->window->clear();

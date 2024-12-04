@@ -7,7 +7,6 @@
 #include "config.h"
 #include "tile.h"
 
-
 void Board::generate_board() {
 	for (size_t i = 0; i < (size_t)this->cfg->rows; i++) {
 		tiles.push_back(std::vector<Tile>());
@@ -51,11 +50,22 @@ void Board::reset() {
 	generate_board();
 }
 
-void Board::draw_sprites(sf::RenderWindow* window, bool debug_mode) {
+void Board::draw_sprites(sf::RenderWindow* window, bool debug_mode, bool paused) {
 	for (auto row = tiles.begin(); row != tiles.end(); row++) {
 		for (auto tile = row->begin(); tile != row->end(); tile++) {
-			window->draw(tile->get_background());
-			window->draw(tile->get_sprite());
+			if (!paused) {
+				if (tile->get_background().getTexture() == &cfg->textures.hidden_tile) {
+					if (!tile->get_is_hidden()) {
+						tile->get_background().setTexture(&cfg->textures.tile_revealed);
+					}
+				}
+				window->draw(tile->get_background());
+				window->draw(tile->get_sprite());
+			} else {
+				tile->get_background().setTexture(&cfg->textures.tile_revealed);
+				window->draw(tile->get_background());
+				continue;
+			}
 			if (debug_mode && tile->get_is_hidden() && tile->has_mine()) {
 				tile->get_top_layer().setTexture(&cfg->textures.mine);
 				window->draw(tile->get_top_layer());
