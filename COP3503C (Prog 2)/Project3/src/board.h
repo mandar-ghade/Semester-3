@@ -20,7 +20,7 @@ public:
 	}
 	Tile* get_clicked_tile(const sf::Vector2i& mouse);
 	void reset(); 
-	void draw_sprites(sf::RenderWindow* window); 
+	void draw_sprites(sf::RenderWindow* window, bool debug_mode); 
 	void print_as_str(); 
 	int count_hidden_tiles();
 	std::vector<Tile*> get_mines();

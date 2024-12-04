@@ -16,6 +16,7 @@ private:
 	GAME_STATE state;
 	Board board;
 	const Config* cfg;
+	const std::string name;
 	sf::RenderWindow* window;
 	class Buttons {
 		private:
@@ -56,20 +57,17 @@ private:
 					)
 				);
 			}
-			void draw(sf::RenderWindow* window) const {
-				window->draw(reset_button);
-				window->draw(debug_button);
-				window->draw(play_pause_button);
-				window->draw(leaderboard_button);
+			void draw(sf::RenderWindow* _window) const {
+				_window->draw(reset_button);
+				_window->draw(debug_button);
+				_window->draw(play_pause_button);
+				_window->draw(leaderboard_button);
 			}
 			bool clicked_reset_button(sf::Vector2i& mouse_coords) const {
 				return (this->reset_button
 						.getGlobalBounds()
 						.contains((float)mouse_coords.x,
 								  (float)mouse_coords.y));
-			}
-			void handle_reset(sf::Vector2i& mouse_coords) {
-
 			}
 			bool handle_click(sf::Vector2i& mouse_coords) {
 				if (this->reset_button
@@ -81,6 +79,12 @@ private:
 					.getGlobalBounds()
 					.contains((float)mouse_coords.x,
 							  (float)mouse_coords.y)) {
+					std::cout << "Clicked!\n";
+					if (this->game->debug_mode) {
+						std::cout << "Debug mode already on! Turning off...\n";
+					} else {
+						std::cout << "Debug mode off. Turning on!\n";
+					}
 					this->debug();
 				} else if (this->leaderboard_button
 					.getGlobalBounds()
@@ -113,13 +117,24 @@ private:
 				this->reset_button.setTexture(this->game->cfg->textures.face_lose);
 			}
 			void debug() {
-
+				if (this->game->state == GAME_STATE::IN_PROGRESS ||
+					this->game->state == GAME_STATE::PAUSED) {
+					if (this->game->debug_mode) {
+						this->game->debug_mode = false;
+					} else {
+						this->game->debug_mode = true;
+					}
+				}
+				this->game->clear();
+				this->game->draw();
 			}
 			void play() {
-
+				this->game->state = GAME_STATE::IN_PROGRESS;
+				this->play_pause_button.setTexture(this->game->cfg->textures.pause);
 			}
 			void pause() {
-
+				this->game->state = GAME_STATE::PAUSED;
+				this->play_pause_button.setTexture(this->game->cfg->textures.play);
 			}
 			void press_leaderboard_button() {
 
@@ -136,7 +151,9 @@ private:
 			void initialize_sprites(const Config* cfg) {
 
 			}
-			void handle_click();
+			bool handle_click(sf::Vector2i& mouse_coords) {
+				return false;
+			}
 			void start_timer();
 	};
 	Buttons buttons;
@@ -152,29 +169,44 @@ public:
 		ui_elements(cfg)
 	{};
 	void draw() {
-		board.draw_sprites(this->window);
+		board.draw_sprites(this->window, this->debug_mode);
 		buttons.draw(this->window);
 	}
-	void reveal_tile(Tile* tile) {
-		if (tile->get_is_hidden()) {
-			tile->reveal_tile();
-		}
+	void clear() {
+		this->window->clear();
 	}
-	bool check_tile_press(sf::Vector2i& mouse_coords) {
+	bool check_tile_press(sf::Vector2i& mouse_coords, bool left_click) {
 		Tile* tile = this->board.get_clicked_tile(mouse_coords);
 		if (tile == nullptr) {
 			return false;
 		}
-		this->reveal_tile(tile);
-		if (tile->has_mine()) {
-			this->state = GAME_STATE::LOSS;
-			this->handle_loss(mouse_coords);
-		} else if (this->cfg->mines == 
-				   this->board.count_hidden_tiles()) {
-			this->state = GAME_STATE::WIN;
-			this->handle_win(mouse_coords);
+		if (left_click && !tile->get_is_flagged()) {
+			tile->reveal_tile();
+		}
+		if (!left_click) {
+			if (tile->get_is_flagged()) {
+				tile->set_flag_state(false);
+			} else if (tile->get_is_hidden()){
+				tile->set_flag_state(true);
+			}
+		} else {
+			if (tile->get_is_flagged()) {
+				return true;
+			}
+			if (tile->has_mine() && !tile->get_is_flagged()) {
+				this->state = GAME_STATE::LOSS;
+				this->handle_loss(mouse_coords);
+			} else if (this->cfg->mines == this->board.count_hidden_tiles()){
+				this->state = GAME_STATE::WIN;
+				this->handle_win(mouse_coords);
+			}
 		}
 		return true;
+	}
+	void handle_right_click(sf::Vector2i& mouse_coords) {
+		if (this->state == GAME_STATE::IN_PROGRESS) {
+			this->check_tile_press(mouse_coords, false);
+		}
 	}
 	void handle_left_click(sf::Vector2i& mouse_coords) {
 		switch (this->state) {
@@ -185,17 +217,22 @@ public:
 				this->handle_loss(mouse_coords);
 				break;
 			case GAME_STATE::IN_PROGRESS:
-				if (this->check_tile_press(mouse_coords)) {
-
-				} else if (this->buttons.handle_click(mouse_coords)) {
-
-				}
+				this->check_tile_press(mouse_coords, true);
+				this->buttons.handle_click(mouse_coords);
+				this->ui_elements.handle_click(mouse_coords);
 				break;
 			case GAME_STATE::PAUSED:
+				this->buttons.handle_click(mouse_coords);
 				break;
 		}
 	}
-	void handle_right_click(sf::Vector2i& mouse_coords);
+	void handle_click(sf::Vector2i& mouse_coords, bool left_click) {
+		if (left_click) {
+			handle_left_click(mouse_coords);
+		} else {
+			handle_right_click(mouse_coords);
+		}
+	}
 	void start();
 	void draw_mines() {
 		auto mines = this->board.get_mines();

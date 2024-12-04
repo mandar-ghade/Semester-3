@@ -39,6 +39,7 @@ public:
 		top_layer.setPosition(
 			sf::Vector2f((float)x * 32, ((float)total_rows - (float)y - 1) * 32)
 		);
+		top_layer.setTexture(&this->cfg->textures.flag);
 	};
 	sf::RectangleShape& get_top_layer(); 
 	sf::RectangleShape& get_background(); 

@@ -22,7 +22,9 @@ sf::Text new_text_object(const sf::Font& font,
 						 unsigned int size,
 						 float x,
 						 float y) {
-	sf::Text text_obj(text, font);
+	sf::Text text_obj;
+	text_obj.setString(text);
+	text_obj.setFont(font);
 	text_obj.setCharacterSize(size);
 	text_obj.setFillColor(color);
 	center_text(text_obj, x, y);
@@ -48,9 +50,8 @@ void run_welcome_window(Config& cfg) {
 		throw std::runtime_error("Could not load font from file.");
 	}
 	sf::Text welcome_text = new_text_object(
-		font,
-		"WELCOME TO MINESWEEPER!",
-		true, true, sf::Color::White, 24, 
+		font, "WELCOME TO MINESWEEPER!", true,
+		true, sf::Color::White, 24, 
 		width / 2, height / 2 - 150
 	);
 	sf::Text enter_name = new_text_object(
@@ -80,9 +81,8 @@ void run_welcome_window(Config& cfg) {
 			} if (event.type == sf::Event::TextEntered) {
 				if (event.text.unicode >= 128) { // if it isn't letter input
 					continue;
-				} else if (
-					std::isalpha(static_cast<char>(event.text.unicode)) && user_typed_str.size() < 10
-				) {
+				} else if (std::isalpha(static_cast<char>(event.text.unicode))
+							&& user_typed_str.size() < 10) {
 					char curr = static_cast<char>(event.text.unicode);
 					if (user_typed_str.empty()) {
 						curr = (char)std::toupper(curr);
@@ -90,18 +90,14 @@ void run_welcome_window(Config& cfg) {
 						curr = (char)std::tolower(curr);
 					}
 					user_typed_str.push_back(curr);
-					dynamic_text_obj = new_text_object(
-						font, user_typed_str + "|", true,
-						false, sf::Color::Yellow, 
-						18, width / 2, height / 2 - 45);
+					dynamic_text_obj.setString(user_typed_str + "|");
+					center_text(dynamic_text_obj, width / 2, height / 2 - 45);
 				} else if (event.text.unicode == 8) {
 					if (!user_typed_str.empty()) {
 						user_typed_str.pop_back();
 					}
-					dynamic_text_obj = new_text_object(
-						font, user_typed_str + "|", true,
-						false, sf::Color::Yellow, 
-						18, width / 2, height / 2 - 45);
+					dynamic_text_obj.setString(user_typed_str + "|");
+					center_text(dynamic_text_obj, width / 2, height / 2 - 45);
 				}
 			}
 		}
@@ -122,6 +118,7 @@ void run_game_window(Config& cfg, std::string& name) {
 	const float width = (float)cfg.columns * 32;
 	const float height = (float)cfg.rows * 32 + 100;
 	sf::RenderWindow window(sf::VideoMode((int)width, (int)height), "Game Window", sf::Style::Close);
+	window.setKeyRepeatEnabled(false);
 	Game game(&cfg, &window);
 	sf::RectangleShape rect;
 	rect.setSize(sf::Vector2f(width, height));
@@ -131,10 +128,13 @@ void run_game_window(Config& cfg, std::string& name) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				window.close();
-			}
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			} 
+			bool click_released = event.type == sf::Event::MouseButtonReleased; // accounts for double clicks
+			bool left_click = event.mouseButton.button == sf::Mouse::Left;
+			bool right_click = event.mouseButton.button == sf::Mouse::Right;
+			if (click_released && (left_click || right_click)) {
 				sf::Vector2i pos = sf::Mouse::getPosition(window);
-				game.handle_left_click(pos);
+				game.handle_click(pos, left_click);
 			}
 			window.clear();
 			window.draw(rect);

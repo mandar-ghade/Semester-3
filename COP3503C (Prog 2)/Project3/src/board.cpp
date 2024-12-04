@@ -51,11 +51,19 @@ void Board::reset() {
 	generate_board();
 }
 
-void Board::draw_sprites(sf::RenderWindow* window) {
+void Board::draw_sprites(sf::RenderWindow* window, bool debug_mode) {
 	for (auto row = tiles.begin(); row != tiles.end(); row++) {
-		for (auto col = row->begin(); col != row->end(); col++) {
-			window->draw(col->get_background());
-			window->draw(col->get_sprite());
+		for (auto tile = row->begin(); tile != row->end(); tile++) {
+			window->draw(tile->get_background());
+			window->draw(tile->get_sprite());
+			if (debug_mode && tile->get_is_hidden() && tile->has_mine()) {
+				tile->get_top_layer().setTexture(&cfg->textures.mine);
+				window->draw(tile->get_top_layer());
+			}
+			if (tile->get_is_flagged()) {
+				tile->get_top_layer().setTexture(&cfg->textures.flag);
+				window->draw(tile->get_top_layer());
+			} 
 		}
 	}
 }
