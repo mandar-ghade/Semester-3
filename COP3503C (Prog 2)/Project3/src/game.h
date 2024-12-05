@@ -149,6 +149,7 @@ private:
 			sf::Sprite timer;
 			Game* game;
 			double elapsed_duration;
+			bool timer_is_paused = false;
 			std::chrono::high_resolution_clock::time_point start;
 		public:
 			UIElements(Game* game): game(game), start(std::chrono::high_resolution_clock::now()) {};
@@ -156,8 +157,9 @@ private:
 			sf::IntRect get_rect_by_digit(int i) {
 				return sf::IntRect(21 * i, 0, 21, 32);
 			}
-			void draw_digit(char c, int x_offset, bool is_mine_counter) {
+			void draw_digit(char c, int x_offset, bool is_mine_counter, bool is_minutes) {
 				// handles digit drawing for mine-counter and time counter
+				// "Is minutes" is specific to time counter.
 				if (c == '-' && is_mine_counter) {
 					// x offset not used in this conditional!
 					this->digit.setTexture(this->game->cfg->textures.digits);
@@ -173,19 +175,32 @@ private:
 					if (!(as_digit >= 0 && as_digit <= 9)) {
 						throw std::runtime_error("Cannot parse digit that isn't between 0 and 9!");
 					}
+					this->digit.setTexture(this->game->cfg->textures.digits);
+					this->digit.setTextureRect(get_rect_by_digit(as_digit));
 					if (is_mine_counter) {
-						this->digit.setTexture(this->game->cfg->textures.digits);
-						this->digit.setTextureRect(get_rect_by_digit(as_digit));
 						this->digit.setPosition(
 							sf::Vector2f(
 								33 + 21 * static_cast<float>(x_offset), 
 								32 * (static_cast<float>(this->game->cfg->rows) + 0.5f) + 16
 							)
 						);
-						this->game->window->draw(this->digit);
-					} else {
-						throw std::runtime_error("TODO!");
+					} else if (is_minutes) {
+						this->digit.setPosition(
+							sf::Vector2f(
+								static_cast<float>(this->game->cfg->columns * 32) - 97 + 21 * static_cast<float>(x_offset),
+								32 * (static_cast<float>(this->game->cfg->rows) + 0.5f) + 16
+							)
+						);
+					} else if (!is_minutes) {
+						// redundant but just to make sure
+						this->digit.setPosition(
+							sf::Vector2f(
+								static_cast<float>(this->game->cfg->columns * 32) - 54 + 21 * static_cast<float>(x_offset),
+								32 * (static_cast<float>(this->game->cfg->rows) + 0.5f) + 16
+							)
+						);
 					}
+					this->game->window->draw(this->digit);
 				}
 			}
 			void draw_mine_counter() {
@@ -194,9 +209,9 @@ private:
 				int x_offset = 0;
 				int abs_mines = std::abs(remaining_mines);
 				if (abs_mines < 100) {
-					this->draw_digit('0', x_offset++, true);
+					this->draw_digit('0', x_offset++, true, false);
 					if (abs_mines < 10) {
-						this->draw_digit('0', x_offset++, true);
+						this->draw_digit('0', x_offset++, true, false);
 					}
 				}
 				if (remaining_mines < 0 && mines_str[0] == '-') {
@@ -204,15 +219,19 @@ private:
 					x_offset--;
 				}
 				for (size_t i = 0; i < mines_str.size(); i++) {
-					this->draw_digit(mines_str[i], static_cast<int>(i) + x_offset, true);
+					this->draw_digit(mines_str[i], static_cast<int>(i) + x_offset, true, false);
 				}
 			}
 			
 			void pause_timer() {
 				// only works if game is about to pause or win is about to occur
+				if (this->timer_is_paused) {
+					return;
+				}
 				if (game->state != GAME_STATE::IN_PROGRESS) {
 					auto now = std::chrono::high_resolution_clock::now();
 					this->elapsed_duration += std::chrono::duration<double>(now - this->start).count();
+					this->timer_is_paused = true;
 				} else {
 					throw std::runtime_error("Cannot pause timer!");
 				}
@@ -222,6 +241,7 @@ private:
 				// only works if game is about to start
 				if (this->game->state == GAME_STATE::IN_PROGRESS) {
 					this->start = std::chrono::high_resolution_clock::now();
+					this->timer_is_paused = false;
 				} else {
 					throw std::runtime_error("Cannot resume timer!");
 				}
@@ -230,6 +250,7 @@ private:
 			void reset_timer() {
 				this->start = std::chrono::high_resolution_clock::now();
 				this->elapsed_duration = 0;
+				this->timer_is_paused = false;
 			}
 			
 			double get_elapsed_seconds() {
@@ -256,9 +277,25 @@ private:
 			}
 			void draw_timer() {
 				auto time = get_timer();
-				std::cout << "Mins: " << std::get<0>(time) << " Secs: " << std::get<1>(time) << '\n';
+				int mins = std::get<0>(time);
+				int secs = std::get<1>(time);
+				std::string mins_str = std::to_string(mins);
+				std::string secs_str = std::to_string(secs);
+				int x_offset_mins = 0;
+				int x_offset_secs = 0;
+				if (mins < 10) {
+					this->draw_digit('0', x_offset_mins++, false, true);
+				}
+				if (secs < 10) {
+					this->draw_digit('0', x_offset_secs++, false, false);
+				}
+				for (size_t i = 0; i < mins_str.size(); i++) {
+					this->draw_digit(mins_str[i], static_cast<int>(i) + x_offset_mins, false, true);
+				}
+				for (size_t i = 0; i < secs_str.size(); i++) {
+					this->draw_digit(secs_str[i], static_cast<int>(i) + x_offset_secs, false, false);
+				}
 			}
-
 			void draw() {
 				this->draw_mine_counter();
 				this->draw_timer();
