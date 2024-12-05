@@ -125,6 +125,16 @@ int Board::count_hidden_tiles() {
 	return count;
 }
 
+int Board::count_flagged_tiles() {
+	int count = 0;
+	for (auto row = this->tiles.begin(); row != this->tiles.end(); row++) {
+		for (auto col = row->begin(); col != row->end(); col++) {
+			if (col->get_is_flagged()) count++;
+		}
+	}
+	return count;
+}
+
 std::vector<Tile*> Board::get_mines() {
 	std::vector<Tile*> mines;
 	for (auto row = this->tiles.begin(); row != this->tiles.end(); row++) {

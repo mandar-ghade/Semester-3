@@ -82,6 +82,7 @@ void Tile::reveal_adjacent_tiles() {
 void Tile::reveal_tile() {
 	// use this when revealing tiles without mines
 	this->is_hidden = false;
+	this->flagged = false;
 	this->set_matching_texture();
 	if (!this->has_mine() && this->adjacent_mines == 0) {
 		this->reveal_adjacent_tiles();
@@ -112,9 +113,6 @@ bool Tile::get_is_flagged() const {
 }
 
 void Tile::set_flag_state(bool is_flagged) {
-	if (!this->is_hidden) {
-		throw std::runtime_error("Cannot flag a tile that has already been revealed!");
-	}
 	this->flagged = is_flagged;
 	// note: cannot have a flagged & revealed tile.
 }

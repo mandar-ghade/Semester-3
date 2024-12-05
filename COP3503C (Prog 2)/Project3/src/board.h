@@ -23,5 +23,6 @@ public:
 	void draw_sprites(sf::RenderWindow* window, bool debug_mode, bool paused); 
 	void print_as_str(); 
 	int count_hidden_tiles();
+	int count_flagged_tiles();
 	std::vector<Tile*> get_mines();
 };

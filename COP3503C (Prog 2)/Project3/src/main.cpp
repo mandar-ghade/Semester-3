@@ -125,6 +125,11 @@ void run_game_window(Config& cfg, std::string& name) {
 	rect.setFillColor(sf::Color::White);
 	while (window.isOpen()) {
 		sf::Event event;
+		// board handled here so timer can tick and not just when an event occurs.
+		window.clear();
+		window.draw(rect);
+		game.draw();
+		window.display();
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				window.close();
@@ -136,10 +141,6 @@ void run_game_window(Config& cfg, std::string& name) {
 				sf::Vector2i pos = sf::Mouse::getPosition(window);
 				game.handle_click(pos, left_click);
 			}
-			window.clear();
-			window.draw(rect);
-			game.draw();
-			window.display();
 		}
 	}
 }

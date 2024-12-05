@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
+
 struct Textures {
 	const sf::Texture hidden_tile;
 	const sf::Texture tile_revealed;
@@ -30,5 +32,6 @@ struct Config {
 	const Textures textures;
 };
 
+void load_texture(const std::string path, sf::Texture* texture, sf::IntRect* rect, const std::string msg);
 Config get_config();
 void display_config(Config& cfg);

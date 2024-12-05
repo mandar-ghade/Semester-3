@@ -2,6 +2,8 @@
 #include "board.h"
 #include "config.h"
 #include "tile.h"
+#include <chrono>
+#include <cmath>
 
 enum GAME_STATE {
 	IN_PROGRESS,
@@ -57,11 +59,11 @@ private:
 					)
 				);
 			}
-			void draw(sf::RenderWindow* _window) const {
-				_window->draw(reset_button);
-				_window->draw(debug_button);
-				_window->draw(play_pause_button);
-				_window->draw(leaderboard_button);
+			void draw() const {
+				this->game->window->draw(reset_button);
+				this->game->window->draw(debug_button);
+				this->game->window->draw(play_pause_button);
+				this->game->window->draw(leaderboard_button);
 			}
 			bool clicked_reset_button(sf::Vector2i& mouse_coords) const {
 				return (this->reset_button
@@ -79,7 +81,6 @@ private:
 					.getGlobalBounds()
 					.contains((float)mouse_coords.x,
 							  (float)mouse_coords.y)) {
-					std::cout << "Clicked!\n";
 					if (this->game->debug_mode) {
 						std::cout << "Debug mode already on! Turning off...\n";
 					} else {
@@ -130,35 +131,140 @@ private:
 			}
 			void play() {
 				this->game->state = GAME_STATE::IN_PROGRESS;
+				this->game->ui_elements.resume_timer();
 				this->play_pause_button.setTexture(this->game->cfg->textures.pause);
 			}
 			void pause() {
 				this->game->state = GAME_STATE::PAUSED;
+				this->game->ui_elements.pause_timer();
 				this->play_pause_button.setTexture(this->game->cfg->textures.play);
 			}
 			void press_leaderboard_button() {
 
 			}
 	};
-	class UIElements {
+	class UIElements { // handles mine counter and timer
 		private:
-			sf::Sprite counter;
+			sf::Sprite digit;
 			sf::Sprite timer;
+			Game* game;
+			double elapsed_duration;
+			std::chrono::high_resolution_clock::time_point start;
 		public:
-			UIElements(const Config* cfg) {
-				initialize_sprites(cfg);
-			}
-			void initialize_sprites(const Config* cfg) {
-				
-			}
-			void draw(sf::RenderWindow* _window) {
+			UIElements(Game* game): game(game), start(std::chrono::high_resolution_clock::now()) {};
 
+			sf::IntRect get_rect_by_digit(int i) {
+				return sf::IntRect(21 * i, 0, 21, 32);
 			}
-			bool handle_click(sf::Vector2i& mouse_coords) {
-				return false;
+			void draw_digit(char c, int x_offset, bool is_mine_counter) {
+				// handles digit drawing for mine-counter and time counter
+				if (c == '-' && is_mine_counter) {
+					// x offset not used in this conditional!
+					this->digit.setTexture(this->game->cfg->textures.digits);
+					this->digit.setTextureRect(get_rect_by_digit(10));
+					this->digit.setPosition(
+						sf::Vector2f(
+							12, 32 * (static_cast<float>(this->game->cfg->rows) + 0.5f) + 16
+						)
+					);
+					this->game->window->draw(this->digit);
+				} else {
+					int as_digit = c - '0';
+					if (!(as_digit >= 0 && as_digit <= 9)) {
+						throw std::runtime_error("Cannot parse digit that isn't between 0 and 9!");
+					}
+					if (is_mine_counter) {
+						this->digit.setTexture(this->game->cfg->textures.digits);
+						this->digit.setTextureRect(get_rect_by_digit(as_digit));
+						this->digit.setPosition(
+							sf::Vector2f(
+								33 + 21 * static_cast<float>(x_offset), 
+								32 * (static_cast<float>(this->game->cfg->rows) + 0.5f) + 16
+							)
+						);
+						this->game->window->draw(this->digit);
+					} else {
+						throw std::runtime_error("TODO!");
+					}
+				}
 			}
-			void start_timer();
-	};
+			void draw_mine_counter() {
+				int remaining_mines = game->get_remaining_mines();
+				std::string mines_str = std::to_string(remaining_mines);
+				int x_offset = 0;
+				int abs_mines = std::abs(remaining_mines);
+				if (abs_mines < 100) {
+					this->draw_digit('0', x_offset++, true);
+					if (abs_mines < 10) {
+						this->draw_digit('0', x_offset++, true);
+					}
+				}
+				if (remaining_mines < 0 && mines_str[0] == '-') {
+					// since the position of a digit is index dependent, the negative gets counted in the calculation and offset is 1 higher than it should be (if it's a negative).
+					x_offset--;
+				}
+				for (size_t i = 0; i < mines_str.size(); i++) {
+					this->draw_digit(mines_str[i], static_cast<int>(i) + x_offset, true);
+				}
+			}
+			
+			void pause_timer() {
+				// only works if game is about to pause or win is about to occur
+				if (game->state != GAME_STATE::IN_PROGRESS) {
+					auto now = std::chrono::high_resolution_clock::now();
+					this->elapsed_duration += std::chrono::duration<double>(now - this->start).count();
+				} else {
+					throw std::runtime_error("Cannot pause timer!");
+				}
+			}
+			
+			void resume_timer() {
+				// only works if game is about to start
+				if (this->game->state == GAME_STATE::IN_PROGRESS) {
+					this->start = std::chrono::high_resolution_clock::now();
+				} else {
+					throw std::runtime_error("Cannot resume timer!");
+				}
+			}
+
+			void reset_timer() {
+				this->start = std::chrono::high_resolution_clock::now();
+				this->elapsed_duration = 0;
+			}
+			
+			double get_elapsed_seconds() {
+				if (game->state == GAME_STATE::IN_PROGRESS) {
+					auto now = std::chrono::high_resolution_clock::now();
+					return this->elapsed_duration + std::chrono::duration<double>(now - this->start).count();
+				} else {
+					return this->elapsed_duration;
+				}
+			}
+			
+			int get_minutes_elapsed() {
+				double secs = this->get_elapsed_seconds();
+				if (secs < 60) {
+					return 0;
+				}
+				return static_cast<int>(std::floor(secs / 60));
+			}
+			std::tuple<int, int> get_timer() {
+				double secs = this->get_elapsed_seconds();
+				int mins_elapsed = static_cast<int>(std::floor(secs / 60)); 
+				int secs_elapsed = static_cast<int>(secs) % 60;
+				return {mins_elapsed, secs_elapsed};
+			}
+			void draw_timer() {
+				auto time = get_timer();
+				std::cout << "Mins: " << std::get<0>(time) << " Secs: " << std::get<1>(time) << '\n';
+			}
+
+			void draw() {
+				this->draw_mine_counter();
+				this->draw_timer();
+			}
+
+		};
 	Buttons buttons;
 	UIElements ui_elements;
 	bool debug_mode = false;
@@ -169,12 +275,12 @@ public:
 		cfg(cfg),
 		window(window),
 		buttons(cfg, this),
-		ui_elements(cfg)
+		ui_elements(this)
 	{};
 	void draw() {
 		board.draw_sprites(this->window, this->debug_mode, this->state == GAME_STATE::PAUSED);
-		buttons.draw(this->window);
-		ui_elements.draw(this->window);
+		buttons.draw();
+		ui_elements.draw();
 	}
 	void clear() {
 		this->window->clear();
@@ -223,7 +329,6 @@ public:
 			case GAME_STATE::IN_PROGRESS:
 				this->check_tile_press(mouse_coords, true);
 				this->buttons.handle_click(mouse_coords);
-				this->ui_elements.handle_click(mouse_coords);
 				break;
 			case GAME_STATE::PAUSED:
 				this->buttons.handle_click(mouse_coords);
@@ -252,6 +357,7 @@ public:
 			this->reset();
 		} else {
 			this->buttons.set_face_win();
+			this->pause_timer();
 		}
 	}
 	void handle_loss(sf::Vector2i& mouse_coords) {
@@ -262,10 +368,20 @@ public:
 		} else {
 			this->draw_mines();
 			this->buttons.set_face_lose();
+			this->pause_timer();
 		}
 	}
-	void pause();
+	int get_remaining_mines() {
+		return this->cfg->mines - this->board.count_flagged_tiles();
+	}
+	void pause_timer() {
+		this->ui_elements.pause_timer();
+	}
+	void resume_timer() {
+		this->ui_elements.resume_timer();
+	}
 	void reset() {
+		this->ui_elements.reset_timer();
 		this->window->clear();
 		this->board.reset();
 	}
