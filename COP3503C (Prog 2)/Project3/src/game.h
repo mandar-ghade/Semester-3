@@ -1,7 +1,9 @@
 #pragma once
 #include "board.h"
 #include "config.h"
+#include "leaderboard.h"
 #include "tile.h"
+#include "utils.h"
 #include <chrono>
 #include <cmath>
 
@@ -20,6 +22,8 @@ private:
 	const Config* cfg;
 	const std::string name;
 	sf::RenderWindow* window;
+	Leaderboard leaderboard;
+	bool leaderboard_window_is_open = false;
 	class Buttons {
 		private:
 			sf::Sprite reset_button;
@@ -140,7 +144,8 @@ private:
 				this->play_pause_button.setTexture(this->game->cfg->textures.play);
 			}
 			void press_leaderboard_button() {
-
+				this->game->leaderboard_window_is_open = true;
+				std::cout << "Called \n";
 			}
 	};
 	class UIElements { // handles mine counter and timer
@@ -228,7 +233,8 @@ private:
 				if (this->timer_is_paused) {
 					return;
 				}
-				if (game->state != GAME_STATE::IN_PROGRESS) {
+				if (game->state != GAME_STATE::IN_PROGRESS || 
+					this->game->leaderboard_window_is_open) {
 					auto now = std::chrono::high_resolution_clock::now();
 					this->elapsed_duration += std::chrono::duration<double>(now - this->start).count();
 					this->timer_is_paused = true;
@@ -306,18 +312,60 @@ private:
 	UIElements ui_elements;
 	bool debug_mode = false;
 public:
-	Game(Config* cfg, sf::RenderWindow* window):
+	Game(std::string name, Config* cfg, sf::RenderWindow* window):
 		state(GAME_STATE::IN_PROGRESS),
 		board(Board(cfg)),
 		cfg(cfg),
+		name(name),
 		window(window),
+		leaderboard(parse()),
 		buttons(cfg, this),
 		ui_elements(this)
 	{};
+	void draw_leaderboard_window() {
+		const float width = (float)cfg->columns * 16;
+		const float height = (float)cfg->rows * 16  + 50;
+		sf::RenderWindow leaderboard_window(sf::VideoMode((int)width, (int)height), "Leaderboard", sf::Style::Close);
+		sf::RectangleShape rect;
+		sf::Font font;
+		if (!font.loadFromFile("./files/font.ttf")) {
+			throw std::runtime_error("Could not load font from file.");
+		}
+		rect.setSize(sf::Vector2f(width, height));
+		rect.setFillColor(sf::Color::Blue);
+		sf::Text leaderboard_text = new_text_object(
+			font, "LEADERBOARD!", true,
+			true, sf::Color::White, 20, 
+			width / 2, height / 2 - 120
+		);
+		std::string leaderboard_str = get_leaderboard_str(&this->leaderboard);
+		sf::Text leaderboard_str_text = new_text_object(
+			font, leaderboard_str, true,
+			false, sf::Color::White, 18,
+			width / 2, height / 2 + 20);
+		while (leaderboard_window.isOpen()) {
+			sf::Event event;
+			while (leaderboard_window.pollEvent(event)) {
+				if (event.type == sf::Event::Closed) {
+					leaderboard_window.close();
+				} 
+			}
+			leaderboard_window.clear();
+			leaderboard_window.draw(rect);
+			leaderboard_window.draw(leaderboard_text);
+			leaderboard_window.draw(leaderboard_str_text);
+			leaderboard_window.display();
+		}
+		this->leaderboard_window_is_open = false;
+	}
 	void draw() {
-		board.draw_sprites(this->window, this->debug_mode, this->state == GAME_STATE::PAUSED);
+		board.draw_sprites(this->window, this->debug_mode, this->state == GAME_STATE::PAUSED || this->leaderboard_window_is_open);
 		buttons.draw();
 		ui_elements.draw();
+		if (this->leaderboard_window_is_open) { // trigger
+			this->pause_timer();
+			draw_leaderboard_window();
+		}
 	}
 	void clear() {
 		this->window->clear();
@@ -391,6 +439,7 @@ public:
 		if (this->buttons.clicked_reset_button(mouse_coords)) {
 			this->state = GAME_STATE::IN_PROGRESS;
 			this->buttons.set_face_happy();
+			add_winner(name, static_cast<int>(this->ui_elements.get_elapsed_seconds()), &this->leaderboard);
 			this->reset();
 		} else {
 			this->buttons.set_face_win();
@@ -402,6 +451,7 @@ public:
 			this->state = GAME_STATE::IN_PROGRESS;
 			this->buttons.set_face_happy();
 			this->reset();
+			set_no_new_player_replaced(&this->leaderboard);
 		} else {
 			this->draw_mines();
 			this->buttons.set_face_lose();

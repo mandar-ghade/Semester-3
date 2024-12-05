@@ -1,42 +1,11 @@
 #include "game.h"
-#include "board.h"
+#include "utils.h"
 #include "config.h"
 #include <cctype>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <stdexcept>
 #include <utility>
-
-void center_text(sf::Text &text, float x, float y) {
-	sf::FloatRect text_rect = text.getLocalBounds();
-	text.setOrigin(text_rect.left + text_rect.width / 2.0f,
-				   text_rect.top + text_rect.height / 2.0f);
-	text.setPosition(sf::Vector2f(x, y));
-}
-
-sf::Text new_text_object(const sf::Font& font,
-						 std::string text,
-						 bool bold,
-						 bool underlined,
-						 const sf::Color& color,
-						 unsigned int size,
-						 float x,
-						 float y) {
-	sf::Text text_obj;
-	text_obj.setString(text);
-	text_obj.setFont(font);
-	text_obj.setCharacterSize(size);
-	text_obj.setFillColor(color);
-	center_text(text_obj, x, y);
-	if (bold) {
-		text_obj.setStyle(sf::Text::Bold);
-	}
-	if (underlined) {
-		text_obj.setStyle(sf::Text::Underlined);
-	}
-	return text_obj;
-}
-
 void run_game_window(Config& cfg, std::string& name);
 
 void run_welcome_window(Config& cfg) {
@@ -119,13 +88,13 @@ void run_game_window(Config& cfg, std::string& name) {
 	const float height = (float)cfg.rows * 32 + 100;
 	sf::RenderWindow window(sf::VideoMode((int)width, (int)height), "Game Window", sf::Style::Close);
 	window.setKeyRepeatEnabled(false);
-	Game game(&cfg, &window);
+	Game game(name, &cfg, &window);
 	sf::RectangleShape rect;
 	rect.setSize(sf::Vector2f(width, height));
 	rect.setFillColor(sf::Color::White);
 	while (window.isOpen()) {
 		sf::Event event;
-		// board handled here so timer can tick and not just when an event occurs.
+		// board drawn outside loop so clock timer can tick and not just when an event occurs.
 		window.clear();
 		window.draw(rect);
 		game.draw();
