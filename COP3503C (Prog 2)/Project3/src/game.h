@@ -145,7 +145,6 @@ private:
 			}
 			void press_leaderboard_button() {
 				this->game->leaderboard_window_is_open = true;
-				std::cout << "Called \n";
 			}
 	};
 	class UIElements { // handles mine counter and timer
@@ -439,11 +438,13 @@ public:
 		if (this->buttons.clicked_reset_button(mouse_coords)) {
 			this->state = GAME_STATE::IN_PROGRESS;
 			this->buttons.set_face_happy();
-			add_winner(name, static_cast<int>(this->ui_elements.get_elapsed_seconds()), &this->leaderboard);
+			this->window->clear();
 			this->reset();
 		} else {
 			this->buttons.set_face_win();
 			this->pause_timer();
+			add_winner(name, static_cast<int>(this->ui_elements.get_elapsed_seconds()), &this->leaderboard);
+			this->buttons.press_leaderboard_button();
 		}
 	}
 	void handle_loss(sf::Vector2i& mouse_coords) {

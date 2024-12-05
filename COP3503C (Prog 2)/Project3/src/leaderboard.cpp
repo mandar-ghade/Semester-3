@@ -68,7 +68,7 @@ void remove_from_file_and_lb(Player& player, Leaderboard* leaderboard) {
 	sort_players_by_time(leaderboard->players);
 	for (size_t i = 0; i < leaderboard->players.size(); i++) {
 		Player p = leaderboard->players.at(i);
-		if (player.name == p.name && player.time == p.time) {
+		if (player.time == p.time) {
 			continue;
 		}
 		players.push_back(p);
@@ -96,7 +96,8 @@ void replace_lowest_score(Player& player, Leaderboard* leaderboard) {
 	}
 	for (size_t i = 0; i < leaderboard->players.size(); i++) {
 		Player& p = leaderboard->players.at(i);
-		if (player.name == p.name && player.time == p.time) {
+		if ((player.name == p.name && player.time == p.time) ||
+			to_string(player) == to_string(p)) {
 			continue;
 		}
 		if (player.time < p.time) {

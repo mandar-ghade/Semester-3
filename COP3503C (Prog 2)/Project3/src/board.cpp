@@ -50,6 +50,15 @@ void Board::reset() {
 	generate_board();
 }
 
+void Board::hide_tiles(sf::RenderWindow* window) {
+	for (auto row = tiles.begin(); row != tiles.end(); row++) {
+		for (auto tile = row->begin(); tile != row->end(); tile++) {
+			tile->get_background().setTexture(&cfg->textures.tile_revealed);
+			window->draw(tile->get_background());
+		}
+	}
+}
+
 void Board::draw_sprites(sf::RenderWindow* window, bool debug_mode, bool paused) {
 	for (auto row = tiles.begin(); row != tiles.end(); row++) {
 		for (auto tile = row->begin(); tile != row->end(); tile++) {
